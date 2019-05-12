@@ -6,7 +6,7 @@ This project is an asignment for c# course at my school, aside from that this is
 
  - C#
  - Windows Forms
- - Model View Presenter
+ - Model View Presenter design pattern
 ## Features
 This application consists of admin and customer sides. Admins have full crud control over the application data, while users can only see their reservation, cancle them or make new ones.
 
