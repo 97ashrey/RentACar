@@ -1,5 +1,5 @@
 # Rent a car
-Multiuser desktop application for renting cars, built in c# programming language. This project is still in development.
+Multiuser desktop application for renting cars, built in c# programming language. This project is still in development and this readme will update when the final version is commited.
 ## Motivation
 This project is an asignment for c# course at my school, aside from that this is a perfect opportunity to implement and gain better understanding of design patterns. 
 ## Built with
