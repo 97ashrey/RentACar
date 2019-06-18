@@ -11,6 +11,7 @@ namespace UI.Views.Reservation
     {
         event EventHandler BrandPickedTriggered;
         event EventHandler FindCarsTriggered;
+        event EventHandler FilterResetTriggered;
 
         string Brand { get; set; }
         string Model { get; set; }

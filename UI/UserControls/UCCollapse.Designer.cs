@@ -70,6 +70,7 @@
             // 
             // panelContent
             // 
+            this.panelContent.AutoSize = true;
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(0, 0);
@@ -89,6 +90,7 @@
             this.Load += new System.EventHandler(this.UCCollapse_Load);
             this.panelBody.ResumeLayout(false);
             this.panelContentBorder.ResumeLayout(false);
+            this.panelContentBorder.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -8,6 +8,7 @@ using UI.Events;
 using UI.Events.Messages;
 using RentACarLibrary.Models;
 using RentACarLibrary.DataDomains;
+using UI.Helpers;
 using System.Windows.Forms;
 
 namespace UI.Presenters.Data
@@ -18,6 +19,8 @@ namespace UI.Presenters.Data
         IEventAggregator eventAggregator;
 
         private SelectedRecordMessage<CarModel> selectedCar;
+
+        private bool subscribedToUpdateStateTrigger = false;
 
         public CarsDataPresenter(ICarsDataView view, IEventAggregator eventAggregator)
         {
@@ -37,6 +40,24 @@ namespace UI.Presenters.Data
             view.UpdateCarTrigger += UpdateTriggerHandler;
             view.DeleteCarTrigger += DeleteTriggerHandler;
             view.CancleTrigger += CancelTriggerHandler;
+        }
+
+        private void SubscribeToUpdateStateTrigger()
+        {
+            if (!subscribedToUpdateStateTrigger)
+            {
+                eventAggregator.Subscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+                subscribedToUpdateStateTrigger = true;
+            }
+        }
+
+        private void UnSubscribeFromUpdateStateTrigger()
+        {
+            if (subscribedToUpdateStateTrigger)
+            {
+                eventAggregator.Unsubscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+                subscribedToUpdateStateTrigger = false;
+            }
         }
 
         private void SetViewDataSources()
@@ -88,15 +109,15 @@ namespace UI.Presenters.Data
 
         private void PopulateCar(CarModel car)
         {
-            car.Brand = view.Brand;
-            car.Model = view.Model;
+            car.Brand = view.Brand.ToLower().RemoveExtraWhiteSpace();
+            car.Model = view.Model.ToLower().RemoveExtraWhiteSpace();
             car.CreatedYear = view.CreatedYear;
             car.CubicCapacity = view.CubicCapacity;
-            car.CarBody = view.CarBody;
-            car.FuelType = view.FuelType;
-            car.ShiftType = view.ShiftType;
-            car.DriveType = view.DriveType;
-            car.DorCount = view.DorCount;
+            car.CarBody = view.CarBody.ToLower();
+            car.FuelType = view.FuelType.ToLower();
+            car.ShiftType = view.ShiftType.ToLower();
+            car.DriveType = view.DriveType.ToLower();
+            car.DorCount = view.DorCount.ToLower();
         }
 
         private void SetStateDefault()
@@ -109,7 +130,8 @@ namespace UI.Presenters.Data
             view.SaveCarTriggerEnabled = false;
             view.UpdateCarTriggerEnabled = false;
             view.DeleteCarTriggerEnabled = true;
-            eventAggregator.Subscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+            view.ClearAllControlErrors();
+            SubscribeToUpdateStateTrigger();
             eventAggregator.Unsubscribe<SelectedRecordMessage<CarModel>>(RecordSelectedHandler);
         }
 
@@ -120,7 +142,7 @@ namespace UI.Presenters.Data
             view.SaveCarTriggerEnabled = false;
             view.UpdateCarTriggerEnabled = true;
             view.DeleteCarTriggerEnabled = false;
-            eventAggregator.Unsubscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+            UnSubscribeFromUpdateStateTrigger();
             eventAggregator.Subscribe<SelectedRecordMessage<CarModel>>(RecordSelectedHandler);
         }
 
@@ -207,6 +229,8 @@ namespace UI.Presenters.Data
             PopulateCar(car);
             AddRecordMessage<CarModel> message = new AddRecordMessage<CarModel>(car);
             eventAggregator.Publish(message);
+
+            SetStateDefault();
         }
 
         private void UpdateTriggerHandler(object sender, EventArgs e)
@@ -217,6 +241,8 @@ namespace UI.Presenters.Data
             UpdateRecordMessage<CarModel> updateMessage =
                 new UpdateRecordMessage<CarModel>(car, selectedCar.Index);
             eventAggregator.Publish(updateMessage);
+
+            SetStateDefault();
         }
 
         private void DeleteTriggerHandler(object sender, EventArgs e)

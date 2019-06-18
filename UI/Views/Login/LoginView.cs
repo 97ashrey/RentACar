@@ -56,6 +56,28 @@ namespace UI.Views.Login
             }
         }
 
+        public void ClearAllControlErrors()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
+            }
+        }
+
+        public void FocusOnTopError()
+        {
+            foreach (string key in controls.Keys)
+            {
+                TextBox tb = controls[key];
+                if (errorProvider.ControlHasError(tb))
+                {
+                    tb.SelectedFocus();
+                    break;
+                }
+            }
+        }
+
         private bool IsInputValid()
         {
             bool valid = true;
@@ -72,15 +94,7 @@ namespace UI.Views.Login
                 valid = false;
             }
 
-            foreach(string key in controls.Keys)
-            {
-                TextBox tb = controls[key];
-                if (errorProvider.ControlHasError(tb))
-                {
-                    tb.SelectedFocus();
-                    break;
-                }
-            }
+            FocusOnTopError();
 
             return valid;
         }

@@ -22,11 +22,14 @@ namespace UI.Views.Data
             NameControls();
 
             priceControl.TextBox.Numbers = true;
-            //priceControl.TextBox.ReadOnly = true;
+            priceControl.TextBox.ReadOnly = true;
+            
             // Set control event handlers
-
             carControl.ComboBox.SelectedIndexChanged += CarSelectedHandler;
             customerControl.ComboBox.SelectedIndexChanged += CustomerSelectedHandler;
+
+            dateFromControl.DateTimePicker.ValueChanged += DatePickedHandler;
+            dateToControl.DateTimePicker.ValueChanged += DatePickedHandler;
 
             foreach (string key in controls.Keys)
             {
@@ -79,7 +82,30 @@ namespace UI.Views.Data
         public bool SaveReservationTriggerEnabled { get => btnSave.Enabled; set => btnSave.Enabled = value; }
         public bool UpdateReservationTriggerEnabled { get => btnUpdate.Enabled; set => btnUpdate.Enabled = value; }
         public bool DeleteReservationTriggerEnabled { get => btnDelete.Enabled; set => btnDelete.Enabled = value; }
-        public bool AllInputsEnabled { get => panelForm.Enabled; set => panelForm.Enabled = value; }
+        public bool CarSelectorEnabled { get => carControl.Enabled; set => carControl.Enabled = value; }
+
+        public bool CustomerSelectorEnabled { get=> customerControl.Enabled; set => customerControl.Enabled = value; }
+
+        public bool DateFromSelectorEnabled { get => dateFromControl.Enabled; set => dateFromControl.Enabled = value; }
+
+        public bool AllInputsEnabled
+        {
+            get
+            {
+                return carControl.Enabled && customerControl.Enabled && lbPeriods.Enabled
+                        && dateFromControl.Enabled && dateToControl.Enabled && priceControl.Enabled;
+            }
+
+            set
+            {
+                carControl.Enabled = value;
+                customerControl.Enabled = value;
+                lbPeriods.Enabled = value;
+                dateFromControl.Enabled = value;
+                dateToControl.Enabled = value;
+                priceControl.Enabled = value;
+            }
+        }
 
         public object User { get => customerControl.SelectedItem; set => customerControl.SelectedItem = value; }
         public object Car { get => carControl.SelectedItem; set => carControl.SelectedItem = value; }
@@ -92,6 +118,8 @@ namespace UI.Views.Data
         public object CustomerDataSource { get => customerControl.ComboBox.DataSource; set => customerControl.ComboBox.DataSource = value; }
         public string CustomerDisplayMember { get => customerControl.ComboBox.DisplayMember; set => customerControl.ComboBox.DisplayMember = value; }
 
+        public object PeriodsDataSource { get => lbPeriods.DataSource; set => lbPeriods.DataSource = value; }
+
         public event EventHandler NewReservationTrigger;
         public event EventHandler SaveReservationTrigger;
         public event EventHandler UpdateReservationTrigger;
@@ -102,12 +130,14 @@ namespace UI.Views.Data
         public event EventHandler CustomerSelectedTrigger;
         public event EventHandler LoadedTrigger;
 
+        public event EventHandler DatePicked;
+
         private void NameControls()
         {
             controls.Add("Car", carControl.ComboBox);
             carControl.ComboBox.Tag = "Automobil";
             controls.Add("Customer", customerControl.ComboBox);
-            customerControl.ComboBox.Tag = "Kupac";
+            customerControl.ComboBox.Tag = "Mušterija";
             controls.Add("DateFrom", dateFromControl.DateTimePicker);
             dateFromControl.DateTimePicker.Tag = "Datum od";
             controls.Add("DateTo", dateToControl.DateTimePicker);
@@ -135,6 +165,9 @@ namespace UI.Views.Data
                 }
                 carControl.ComboBox.Focus();
             }
+
+            carControl.ComboBox.Focus();
+            lbPeriods.DataSource = null;
         }
 
         public void SetControlError(string controlName, string message)
@@ -160,39 +193,17 @@ namespace UI.Views.Data
             }
         }
 
-        public void ShowAlertMessage(AlertMessage alertMessage)
+        public void ClearAllControlErrors()
         {
-            alert.Display(alertMessage);
-        }
-
-        private bool Valid()
-        {
-            bool valid = true;
-            // Check for empty values
             foreach (string key in controls.Keys)
             {
                 Control control = controls[key];
-                if (control is TextBox)
-                {
-                    TextBox tb = control as TextBox;
-                    bool isEmpty = tb.Text.Trim() == "";
-                    if (isEmpty)
-                    {
-                        errorProvider.SetError(tb, Messages.ErrorRequiredField(tb.Tag as string));
-                        valid = false;
-                    }
-                }
-                else if (control is ComboBox)
-                {
-                    ComboBox cb = control as ComboBox;
-                    if (cb.SelectedIndex == -1)
-                    {
-                        errorProvider.SetError(cb, Messages.ErrorRequiredField(cb.Tag as string));
-                        valid = false;
-                    }
-                }
+                errorProvider.ClearError(control);
             }
+        }
 
+        public void FocusOnTopError()
+        {
             // TODO set focus code
             foreach (string key in controls.Keys)
             {
@@ -209,10 +220,13 @@ namespace UI.Views.Data
                     break;
                 }
             }
-
-            return valid;
         }
 
+        public void ShowAlertMessage(AlertMessage alertMessage)
+        {
+            alert.Display(alertMessage);
+        }
+       
         private void ShowFormFillError()
         {
             AlertMessage message = new AlertMessage(AlertMessage.MessageType.Error, Messages.ERROR_FORM_FILL);
@@ -236,21 +250,11 @@ namespace UI.Views.Data
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!Valid())
-            {
-                ShowFormFillError();
-                return;
-            }
             SaveReservationTrigger?.Invoke(this, e);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (!Valid())
-            {
-                ShowFormFillError();
-                return;
-            }
             UpdateReservationTrigger?.Invoke(this, e);
         }
 
@@ -272,6 +276,11 @@ namespace UI.Views.Data
         private void CustomerSelectedHandler(object sender, EventArgs e)
         {
             CustomerSelectedTrigger?.Invoke(this, e);
+        }
+
+        private void DatePickedHandler(object sender, EventArgs e)
+        {
+            DatePicked?.Invoke(this, e);
         }
     }
 }

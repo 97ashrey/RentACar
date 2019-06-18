@@ -70,24 +70,44 @@ namespace UI.Views.Data
         public string CarIDsDisplayMember { get => carControl.ComboBox.DisplayMember; set => carControl.ComboBox.DisplayMember = value; }
         public string CarIDsValueMemeber { get => carControl.ComboBox.ValueMember; set => carControl.ComboBox.ValueMember = value; }
 
+        public object FreePeriodDisplayDataSource { get => lbFreePeriods.DataSource; set => lbFreePeriods.DataSource = value; }
+
         public bool NewOfferTriggerEnabled { get => btnNew.Enabled; set => btnNew.Enabled = value; }
         public bool SaveOfferTriggerEnabled { get => btnSave.Enabled; set => btnSave.Enabled = value; }
         public bool UpdateOfferTriggerEnabled { get => btnUpdate.Enabled; set => btnUpdate.Enabled = value; }
         public bool DeleteOfferTriggerEnabled { get => btnDelete.Enabled; set => btnDelete.Enabled = value; }
         public bool AllInputsEnabled
         {
-            get => true;
+            get => carControl.Enabled && 
+                   lblCarInfo.Enabled &&
+                   lbFreePeriods.Enabled &&
+                   dateFromControl.Enabled &&
+                   dateToControl.Enabled &&
+                   pricePerDayControl.Enabled;
             set
             {
-                tlpCar.Enabled = value;
-                tlpForm.Enabled = value;
+                //tlpCar.Enabled = value;
+                //tlpForm.Enabled = value;
+                carControl.Enabled = value;
+                lblCarInfo.Enabled = value;
+                lbFreePeriods.Enabled = value;
+                dateFromControl.Enabled = value;
+                dateToControl.Enabled = value;
+                pricePerDayControl.Enabled = value;
             }
         }
+        public bool PricePerDayInputEnabled { get => pricePerDayControl.Enabled; set => pricePerDayControl.Enabled = value; }
+        public bool CarIDInputEnabled { get => carControl.Enabled; set => carControl.Enabled = value; }
 
         public object Car { get => carControl.SelectedItem; set => carControl.SelectedItem = value; }
         public DateTime From { get => dateFromControl.Date; set => dateFromControl.Date = value; }
         public DateTime To { get => dateToControl.Date; set => dateToControl.Date = value; }
-        public double PricePerDay { get => double.Parse(pricePerDayControl.InputText); set => pricePerDayControl.InputText = value.ToString(); }
+        public double PricePerDay
+        {   get {
+                return (pricePerDayControl.InputText.Trim() == "") ? 0 : double.Parse(pricePerDayControl.InputText);
+            }
+            set => pricePerDayControl.InputText = value.ToString();
+        }
         public object Presenter { private get; set; }
 
         public event EventHandler NewOfferTrigger;
@@ -123,8 +143,13 @@ namespace UI.Views.Data
                 {
                     (control as ComboBox).SelectedIndex = -1;
                 }
+                else if(control is DateTimePicker)
+                {
+                    (control as DateTimePicker).Value = DateTime.Today;
+                }
             }
             carControl.ComboBox.Focus();
+            lbFreePeriods.DataSource = null;
         }
 
         public void SetControlError(string controlName, string message)
@@ -155,40 +180,23 @@ namespace UI.Views.Data
             alert.Display(alertMessage);
         }
 
-        private void ShowFormFillError()
+        public void ClearAllControlErrors()
         {
-            AlertMessage message = new AlertMessage(AlertMessage.MessageType.Error, Messages.ERROR_FORM_FILL);
-            alert.Display(message);
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
+            }
         }
 
-        private bool Valid()
+        public void FocusOnTopError()
         {
-            bool valid = true;
-            if (pricePerDayControl.InputText.Trim() == "")
-            {
-                errorProvider.SetError(
-                    pricePerDayControl.TextBox, 
-                    Messages.ErrorRequiredField(pricePerDayControl.TextBox.Tag as string));
-                valid = false;
-            }
-
-            if (carControl.ComboBox.SelectedIndex == -1)
-            {
-                errorProvider.SetError(
-                    carControl.ComboBox, 
-                    Messages.ErrorRequiredField(carControl.ComboBox.Tag as string));
-                valid = false;
-            }
-
-            // TODO add date validations
-            // From must be before TO and they cant be in the same date not counting hours
-            // From and To must not be in the past
-            foreach(string key in controls.Keys)
+            foreach (string key in controls.Keys)
             {
                 Control control = controls[key];
                 if (errorProvider.ControlHasError(control))
                 {
-                    if(control is TextBox)
+                    if (control is TextBox)
                     {
                         (control as TextBox).SelectedFocus();
                         break;
@@ -197,7 +205,6 @@ namespace UI.Views.Data
                     break;
                 }
             }
-            return valid;
         }
 
         // Event handlers
@@ -217,19 +224,11 @@ namespace UI.Views.Data
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!Valid())
-            {
-                return;
-            }
             SaveOfferTrigger?.Invoke(this, e);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (!Valid())
-            {
-                return;
-            }
             UpdateOfferTrigger?.Invoke(this, e);
         }
 

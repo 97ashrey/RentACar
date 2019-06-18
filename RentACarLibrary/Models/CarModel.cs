@@ -6,6 +6,7 @@ namespace RentACarLibrary.Models
     [Serializable]
     public class CarModel : IDataModel
     {
+
         public int ID { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }

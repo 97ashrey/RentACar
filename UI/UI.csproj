@@ -52,6 +52,7 @@
     <Compile Include="Events\IApplicationEvent.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\Messages\AlertMessage.cs" />
+    <Compile Include="Events\Messages\ReservationMessages\CarSelectedMessage.cs" />
     <Compile Include="Events\Messages\ReservationMessages\CarsFoundMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\AddRecordMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\CrudOperationMessage.cs" />
@@ -63,8 +64,12 @@
     <Compile Include="Events\Messages\TableMessages\SelectedRecordMessage.cs" />
     <Compile Include="Events\Messages\StateMessages\ToUpdateStateMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\UpdateRecordMessage.cs" />
-    <Compile Include="Helpers\ReservationModelWrapper.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Models\ModelHelpers.cs" />
+    <Compile Include="Models\OfferModelWrapper.cs" />
+    <Compile Include="Models\ReservationModelWrapper.cs" />
     <Compile Include="Helpers\TableColumnInfo.cs" />
+    <Compile Include="Helpers\TimePeriod.cs" />
     <Compile Include="Presenters\Data\CarsDataPresenter.cs" />
     <Compile Include="Presenters\Data\CarsTablePresenter.cs" />
     <Compile Include="Presenters\Data\CustomerReservationsTablePresenter.cs" />
@@ -81,6 +86,8 @@
     <Compile Include="Presenters\Login\RegisterPresenter.cs" />
     <Compile Include="Presenters\PresenterHelpers.cs" />
     <Compile Include="Presenters\Reservation\CarFilterPresenter.cs" />
+    <Compile Include="Presenters\Reservation\CreateReservationPresenter.cs" />
+    <Compile Include="Presenters\Reservation\MakeReservationPresenter.cs" />
     <Compile Include="Presenters\Reservation\SelectCarPresenter.cs" />
     <Compile Include="UserControls\UCCollapse.cs">
       <SubType>UserControl</SubType>
@@ -103,6 +110,8 @@
       <DependentUpon>CreateReservationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Reservation\ICarFilterView.cs" />
+    <Compile Include="Views\Reservation\ICreateReservationView.cs" />
+    <Compile Include="Views\Reservation\IMakeReservationView.cs" />
     <Compile Include="Views\Reservation\ISelectCarView.cs" />
     <Compile Include="Views\Reservation\MakeReservationView.cs">
       <SubType>UserControl</SubType>

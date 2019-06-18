@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tlpForm = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.panelBtnContainer = new System.Windows.Forms.Panel();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnClearFilters = new System.Windows.Forms.Button();
             this.driveTypeControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.dorCountControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.modelControl = new UI.UserControls.UCVerticalComboBoxGroup();
@@ -41,9 +45,6 @@
             this.cubicCapacityFromControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.createdYearToControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.createdYearFromControl = new UI.UserControls.UCVerticalComboBoxGroup();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.panelBtnContainer = new System.Windows.Forms.Panel();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tlpForm.SuspendLayout();
             this.panelBtnContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -76,6 +77,43 @@
             this.tlpForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpForm.Size = new System.Drawing.Size(521, 202);
             this.tlpForm.TabIndex = 0;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(7, 13);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(250, 37);
+            this.btnSearch.TabIndex = 1;
+            this.btnSearch.Text = "Pronadji automobile";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // panelBtnContainer
+            // 
+            this.panelBtnContainer.Controls.Add(this.btnClearFilters);
+            this.panelBtnContainer.Controls.Add(this.btnSearch);
+            this.panelBtnContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelBtnContainer.Location = new System.Drawing.Point(0, 202);
+            this.panelBtnContainer.Name = "panelBtnContainer";
+            this.panelBtnContainer.Padding = new System.Windows.Forms.Padding(10);
+            this.panelBtnContainer.Size = new System.Drawing.Size(521, 57);
+            this.panelBtnContainer.TabIndex = 2;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
+            // btnClearFilters
+            // 
+            this.btnClearFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearFilters.Location = new System.Drawing.Point(263, 13);
+            this.btnClearFilters.Name = "btnClearFilters";
+            this.btnClearFilters.Size = new System.Drawing.Size(250, 37);
+            this.btnClearFilters.TabIndex = 2;
+            this.btnClearFilters.Text = "Resetuj filter";
+            this.btnClearFilters.UseVisualStyleBackColor = true;
+            this.btnClearFilters.Click += new System.EventHandler(this.btnClearFilters_Click);
             // 
             // driveTypeControl
             // 
@@ -198,32 +236,6 @@
             this.createdYearFromControl.Size = new System.Drawing.Size(124, 62);
             this.createdYearFromControl.TabIndex = 11;
             // 
-            // btnSearch
-            // 
-            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSearch.Location = new System.Drawing.Point(10, 10);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(501, 37);
-            this.btnSearch.TabIndex = 1;
-            this.btnSearch.Text = "Pronadji automobile";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // panelBtnContainer
-            // 
-            this.panelBtnContainer.Controls.Add(this.btnSearch);
-            this.panelBtnContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelBtnContainer.Location = new System.Drawing.Point(0, 202);
-            this.panelBtnContainer.Name = "panelBtnContainer";
-            this.panelBtnContainer.Padding = new System.Windows.Forms.Padding(10);
-            this.panelBtnContainer.Size = new System.Drawing.Size(521, 57);
-            this.panelBtnContainer.TabIndex = 2;
-            // 
-            // errorProvider
-            // 
-            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider.ContainerControl = this;
-            // 
             // CarFilterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,5 +268,6 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Panel panelBtnContainer;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Button btnClearFilters;
     }
 }

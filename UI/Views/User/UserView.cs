@@ -25,5 +25,12 @@ namespace UI.Views.User
                 panelMain.Controls.Add(control);
             }
         }
+
+        private void UserView_Load(object sender, EventArgs e)
+        {
+            string username = RentACarLibrary.SessionData.CurrentUser != null ?
+                                RentACarLibrary.SessionData.CurrentUser.Username : "ashrey97";
+            lblUsername.Text =  username;
+        }
     }
 }

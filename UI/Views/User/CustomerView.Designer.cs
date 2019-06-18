@@ -38,12 +38,12 @@
             // panelSide
             // 
             this.panelSide.Controls.Add(this.flowLayoutPanel1);
-            this.panelSide.Size = new System.Drawing.Size(170, 450);
+            this.panelSide.Size = new System.Drawing.Size(170, 518);
             this.panelSide.Controls.SetChildIndex(this.flowLayoutPanel1, 0);
             // 
             // panelMain
             // 
-            this.panelMain.Size = new System.Drawing.Size(630, 450);
+            this.panelMain.Size = new System.Drawing.Size(630, 518);
             // 
             // flowLayoutPanel1
             // 
@@ -53,7 +53,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 90);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(170, 360);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(170, 428);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnReservations
@@ -78,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 518);
             this.Name = "CustomerView";
             this.Text = "CustomerView";
             this.panelSide.ResumeLayout(false);

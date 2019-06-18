@@ -47,6 +47,7 @@
             this.panelAlertContainer1 = new UI.UserControls.PanelAlertContainer();
             this.alert = new UI.UserControls.UCAlert();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lbFreePeriods = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -69,19 +70,20 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.panelForm);
             this.splitContainer.Panel2.Controls.Add(this.panelAlertContainer1);
-            this.splitContainer.Size = new System.Drawing.Size(549, 494);
-            this.splitContainer.SplitterDistance = 256;
+            this.splitContainer.Size = new System.Drawing.Size(549, 594);
+            this.splitContainer.SplitterDistance = 268;
             this.splitContainer.TabIndex = 0;
             // 
             // panelForm
             // 
             this.panelForm.Controls.Add(this.tlpForm);
+            this.panelForm.Controls.Add(this.lbFreePeriods);
             this.panelForm.Controls.Add(this.tlpButtons);
             this.panelForm.Controls.Add(this.tlpCar);
             this.panelForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelForm.Location = new System.Drawing.Point(0, 0);
             this.panelForm.Name = "panelForm";
-            this.panelForm.Size = new System.Drawing.Size(549, 176);
+            this.panelForm.Size = new System.Drawing.Size(549, 264);
             this.panelForm.TabIndex = 1;
             // 
             // tlpForm
@@ -94,11 +96,11 @@
             this.tlpForm.Controls.Add(this.dateFromControl, 0, 0);
             this.tlpForm.Controls.Add(this.pricePerDayControl, 2, 0);
             this.tlpForm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpForm.Location = new System.Drawing.Point(0, 56);
+            this.tlpForm.Location = new System.Drawing.Point(0, 151);
             this.tlpForm.Name = "tlpForm";
             this.tlpForm.RowCount = 1;
             this.tlpForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpForm.Size = new System.Drawing.Size(549, 66);
+            this.tlpForm.Size = new System.Drawing.Size(549, 59);
             this.tlpForm.TabIndex = 3;
             // 
             // dateToControl
@@ -108,7 +110,7 @@
             this.dateToControl.LabelText = "Datum do";
             this.dateToControl.Location = new System.Drawing.Point(186, 3);
             this.dateToControl.Name = "dateToControl";
-            this.dateToControl.Size = new System.Drawing.Size(177, 60);
+            this.dateToControl.Size = new System.Drawing.Size(177, 53);
             this.dateToControl.TabIndex = 1;
             // 
             // dateFromControl
@@ -118,7 +120,7 @@
             this.dateFromControl.LabelText = "Datum od";
             this.dateFromControl.Location = new System.Drawing.Point(3, 3);
             this.dateFromControl.Name = "dateFromControl";
-            this.dateFromControl.Size = new System.Drawing.Size(177, 60);
+            this.dateFromControl.Size = new System.Drawing.Size(177, 53);
             this.dateFromControl.TabIndex = 0;
             // 
             // pricePerDayControl
@@ -128,7 +130,7 @@
             this.pricePerDayControl.LabelText = "Cena po danu";
             this.pricePerDayControl.Location = new System.Drawing.Point(369, 3);
             this.pricePerDayControl.Name = "pricePerDayControl";
-            this.pricePerDayControl.Size = new System.Drawing.Size(177, 60);
+            this.pricePerDayControl.Size = new System.Drawing.Size(177, 53);
             this.pricePerDayControl.TabIndex = 2;
             // 
             // tlpButtons
@@ -145,7 +147,7 @@
             this.tlpButtons.Controls.Add(this.btnSave, 1, 0);
             this.tlpButtons.Controls.Add(this.btnNew, 0, 0);
             this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tlpButtons.Location = new System.Drawing.Point(0, 122);
+            this.tlpButtons.Location = new System.Drawing.Point(0, 210);
             this.tlpButtons.Name = "tlpButtons";
             this.tlpButtons.RowCount = 1;
             this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -247,7 +249,7 @@
             // 
             this.panelAlertContainer1.Controls.Add(this.alert);
             this.panelAlertContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 176);
+            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 264);
             this.panelAlertContainer1.Name = "panelAlertContainer1";
             this.panelAlertContainer1.Padding = new System.Windows.Forms.Padding(10);
             this.panelAlertContainer1.Size = new System.Drawing.Size(549, 58);
@@ -269,13 +271,22 @@
             this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider.ContainerControl = this;
             // 
+            // lbFreePeriods
+            // 
+            this.lbFreePeriods.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lbFreePeriods.FormattingEnabled = true;
+            this.lbFreePeriods.Location = new System.Drawing.Point(0, 56);
+            this.lbFreePeriods.Name = "lbFreePeriods";
+            this.lbFreePeriods.Size = new System.Drawing.Size(549, 95);
+            this.lbFreePeriods.TabIndex = 5;
+            // 
             // OffersDataView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer);
             this.Name = "OffersDataView";
-            this.Size = new System.Drawing.Size(549, 494);
+            this.Size = new System.Drawing.Size(549, 594);
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
@@ -309,5 +320,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.ListBox lbFreePeriods;
     }
 }

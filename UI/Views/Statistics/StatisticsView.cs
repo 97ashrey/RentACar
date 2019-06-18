@@ -29,6 +29,7 @@ namespace UI.Views.Statistics
 
         private void LoadHandler(object sender, EventArgs e)
         {
+            dtpControl.Date = DateTime.Today;
             LoadedTrigger?.Invoke(this, e);
             ParentChanged += ReloadHandler;
         }

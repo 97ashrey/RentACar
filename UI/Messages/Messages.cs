@@ -91,5 +91,11 @@ namespace UI
 
         public static string MESSAGE_RESERVATION_CREATE { get; } = "Uspešno ste kreirali rezervaciju";
         #endregion
+
+        public static string ERROR_DATE_FROM_BEFORE_DATE_TO { get; } = "Datum 'od' mora biti pre datuma 'do'!";
+
+        public static string ERROR_DATE_IN_THE_PAST { get; } = "Datum ne sme biti u prošlosti!";
+
+        public static string ERROR_NO_TIME_PERIOD { get; } = "Nema tog termina!";
     }
 }

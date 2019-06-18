@@ -20,5 +20,7 @@ namespace UI.Views.Data
 
         bool AllInputsEnabled { get; set; }
 
+        string Password { get; set; }
+
     }
 }

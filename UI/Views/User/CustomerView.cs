@@ -35,11 +35,13 @@ namespace UI.Views.User
         private void ShowCustomerReservationsView()
         {
             ShowControl(customerReservationsView);
+            btnReservations.Select();
         }
 
         private void ShowMakeNewReservationView()
         {
             ShowControl(makeNewReservationView);
+            btnMakeReservation.Select();
         }
 
         private void BtnReservationsClickHandler(object sender, EventArgs e)

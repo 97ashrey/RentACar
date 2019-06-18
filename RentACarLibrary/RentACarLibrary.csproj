@@ -50,6 +50,7 @@
     <Compile Include="DataAccess\FileConnection\ModelConnectionHelpers.cs" />
     <Compile Include="DataAccess\FileConnection\UserModelConnection.cs" />
     <Compile Include="DataDomains\CarModelDataDomain.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FSAccess\FSConnection.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="Models\DataModel.cs" />

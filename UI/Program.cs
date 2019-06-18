@@ -27,37 +27,42 @@ namespace UI
         {
             RentACarLibrary.GlobalConfig.GenerateStorageDirectories();
             RentACarLibrary.GlobalConfig.InitializeDataConection();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            StartApplication();
+
+            //Application.Run(CreateAdminView());
+            //Application.Run(CreateCustomerView());
+            //Application.Run(new UI.Views.TestForm());
+        }
+
+        private static void StartApplication()
+        {
+            
 
             LoginView loginView = new LoginView();
             LoginPresenter loginPresenter = new LoginPresenter(loginView);
             loginView.Presenter = loginPresenter;
 
-            //while (true)
-            //{
-            //    DialogResult result = loginView.ShowDialog();
-            //    if (result != DialogResult.OK)
-            //    {
-            //        break;
-            //    }
+            while (true)
+            {
+                DialogResult result = loginView.ShowDialog();
+                if (result != DialogResult.OK)
+                {
+                    break;
+                }
 
-            //    UserView userView;
-            //    if (RentACarLibrary.SessionData.IsAdmin())
-            //    {
-            //        userView = CreateAdminView();
-            //    }
-            //    else
-            //    {
-            //        userView = CreateCustomerView();
-            //    }
-            //    Application.Run(userView);
-            //}
-
-            //Application.Run(CreateAdminView());
-            Application.Run(CreateCustomerView());
-            //Application.Run(new UI.Views.TestForm());
+                UserView userView;
+                if (RentACarLibrary.SessionData.IsAdmin())
+                {
+                    userView = CreateAdminView();
+                }
+                else
+                {
+                    userView = CreateCustomerView();
+                }
+                Application.Run(userView);
+            }
         }
 
         private static AdminView CreateAdminView()
@@ -159,12 +164,16 @@ namespace UI
             SelectCarView selectCarView = new SelectCarView();
             selectCarView.Presenter = new SelectCarPresenter(selectCarView, eventAggregator);
             CreateReservationView createReservationView = new CreateReservationView();
+            createReservationView.Presenter = new CreateReservationPresenter(createReservationView, eventAggregator);
 
             MakeReservationView makeReservationView = new MakeReservationView(
                 carFilterView,
                 selectCarView,
                 createReservationView
                 );
+            makeReservationView.Presenter = new MakeReservationPresenter(
+                    makeReservationView,
+                    eventAggregator);
 
             return makeReservationView;
         }

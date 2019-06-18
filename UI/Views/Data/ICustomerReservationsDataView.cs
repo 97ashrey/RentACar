@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI.Views.Data
 {
-    public interface ICustomerReservationsDataView : IPresenter
+    public interface ICustomerReservationsDataView : IPresenter, IAlert
     {
         event EventHandler CancleReservationTriggered;
 

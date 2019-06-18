@@ -10,9 +10,9 @@ namespace RentACarLibrary.DataDomains
     {
         public static readonly string[] ShiftTypes = new string[]
         {
-            "Ručni",
-            "Automatik",
-            "Polu automatik"
+            "ručni",
+            "automatik",
+            "polu automatik"
         };
         //public enum ShiftType
         //{
@@ -23,15 +23,15 @@ namespace RentACarLibrary.DataDomains
 
         public static readonly string[] CarBodies= new string[]
         {
-            "Kupe",
-            "Pikap",
-            "Hečbek",
-            "Kabriolet",
-            "Karavan",
-            "Limuzina",
-            "Minibus/Van",
-            "SUV",
-            "Sedan"
+            "kupe",
+            "pikap",
+            "hečbek",
+            "kabriolet",
+            "karavan",
+            "limuzina",
+            "minibus/Van",
+            "suv",
+            "sedan"
         };
 
         //public enum CarBody
@@ -48,11 +48,11 @@ namespace RentACarLibrary.DataDomains
 
         public static readonly string[] FuelTypes = new string[]
         {
-            "Benzin",
-            "Dizel",
-            "Električan",
-            "Hibrid",
-            "CNG"
+            "benzin",
+            "dizel",
+            "električan",
+            "hibrid",
+            "cng"
         };
 
         //public enum FuelType
@@ -66,8 +66,8 @@ namespace RentACarLibrary.DataDomains
 
         public static readonly string[] DriveTypes = new string[]
         {
-            "Prednji",
-            "Zadnji",
+            "prednji",
+            "zadnji",
             "4x4"
         };
 

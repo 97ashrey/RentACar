@@ -156,6 +156,35 @@ namespace UI.Views.Data
             }
         }
 
+        public void FocusOnTopError()
+        {
+            // TODO set focus code
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                if (errorProvider.ControlHasError(control))
+                {
+                    if (control is TextBox)
+                    {
+                        TextBox tb = control as TextBox;
+                        tb.SelectedFocus();
+                        break;
+                    }
+                    control.Focus();
+                    break;
+                }
+            }
+        }
+
+        public void ClearAllControlErrors()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
+            }
+        }
+
         public void ShowAlertMessage(AlertMessage alertMessage)
         {
             alert.Display(alertMessage);
@@ -205,22 +234,7 @@ namespace UI.Views.Data
             //    valid = false;
             //}
 
-            // TODO set focus code
-            foreach (string key in controls.Keys)
-            {
-                Control control = controls[key];
-                if (errorProvider.ControlHasError(control))
-                {
-                    if (control is TextBox)
-                    {
-                        TextBox tb = control as TextBox;
-                        tb.SelectedFocus();
-                        break;
-                    }
-                    control.Focus();
-                    break;
-                }
-            }
+            FocusOnTopError();
 
             return valid;
         }

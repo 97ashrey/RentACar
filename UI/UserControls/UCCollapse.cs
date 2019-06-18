@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace UI.UserControls
 {
-    [Designer(typeof(UCCollapseDesigner))]
+    //[Designer(typeof(UCCollapseDesigner))]
     public partial class UCCollapse : UserControl
     {
         private int expandedHeight;
@@ -30,7 +30,6 @@ namespace UI.UserControls
         ]
         public string Heading { get => btnToggle.Text; set => btnToggle.Text = value; }
         
-
         public UCCollapse()
         {
             InitializeComponent();
@@ -41,18 +40,34 @@ namespace UI.UserControls
             panelContentBorder.Padding = ContentBorder;
             panelContentBorder.BackColor = Color.LightGray;
         }
-
         
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Panel Content
         {
             get { return panelContent; }
         }
 
-        private void SetHeigths()
+        public void AddControl(Control control)
         {
-            expandedHeight = Height;
+            control.Dock = DockStyle.Top;
+            panelContent.Controls.Add(control);
+            SetExpandedHeigth();
+        }
+
+        private void SetHeights()
+        {
             collapsedHeight = btnToggle.Height;
+            SetExpandedHeigth();
+        }
+
+        private void SetExpandedHeigth()
+        {
+            int height = 0;
+            foreach(Control control in panelContent.Controls)
+            {
+                height += control.Height;
+            }
+            expandedHeight = height + collapsedHeight;
         }
 
         private void SetToggleImages()
@@ -78,7 +93,7 @@ namespace UI.UserControls
 
         private void UCCollapse_Load(object sender, EventArgs e)
         {
-            SetHeigths();
+            SetHeights();
             ToggleCollapse();
         }
 

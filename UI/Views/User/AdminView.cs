@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Views.Data;
-using UI.Presenters.Data;
-using UI.Events;
 
 namespace UI.Views.User
 {
@@ -60,26 +50,31 @@ namespace UI.Views.User
         public void ShowCustomersDataView()
         {
             ShowControl(customersDataView);
+            btnCustomers.Select();
         }
 
         public void ShowCarsDataView()
         {
             ShowControl(carsDataView);
+            btnCars.Select();
         }
 
         public void ShowOffersDataView()
         {
             ShowControl(offersDataView);
+            btnOffers.Select();
         }
 
         public void ShowReservationsDataView()
         {
             ShowControl(reservationsDataView);
+            btnReservations.Select();
         }
 
         public void ShowStatisticsView()
         {
             ShowControl(statisticsView);
+            btnStatistics.Select();
         }
 
         // Event handlers

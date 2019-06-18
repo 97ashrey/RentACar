@@ -48,6 +48,7 @@ namespace UI.Views.Reservation
 
         public event EventHandler BrandPickedTriggered;
         public event EventHandler FindCarsTriggered;
+        public event EventHandler FilterResetTriggered;
         public event EventHandler LoadedTrigger;
 
         public string Brand { get => brandControl.SelectedItem as string; set => brandControl.SelectedItem = value; }
@@ -83,12 +84,11 @@ namespace UI.Views.Reservation
 
         public object Presenter { private get; set; }
        
-
         public void ClearAllControls()
         {
             foreach (string key in controls.Keys)
             {
-                (controls[key] as ComboBox).SelectedIndex = -1;
+                (controls[key] as ComboBox).SelectedItem = "Izaberi";
             }
         }
 
@@ -110,6 +110,28 @@ namespace UI.Views.Reservation
             }
         }
 
+        public void ClearAllControlErrors()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
+            }
+        }
+
+        public void FocusOnTopError()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                if (errorProvider.ControlHasError(control))
+                {
+                    control.Focus();
+                    break;
+                }
+            }
+        }
+
         // EventHandlers
         private void CarFilterView_Load(object sender, EventArgs e)
         {
@@ -124,6 +146,11 @@ namespace UI.Views.Reservation
         private void brand_SelectedIndexChanged(object sender, EventArgs e)
         {
             BrandPickedTriggered?.Invoke(this, e);
+        }
+
+        private void btnClearFilters_Click(object sender, EventArgs e)
+        {
+            FilterResetTriggered?.Invoke(this, e);
         }
     }
 }

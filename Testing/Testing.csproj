@@ -54,6 +54,10 @@
       <Project>{2b8f19bc-d2be-4264-9270-73b4eed5853a}</Project>
       <Name>RentACarLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI\UI.csproj">
+      <Project>{82beb296-fa85-4695-a74a-2c3cac409340}</Project>
+      <Name>UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

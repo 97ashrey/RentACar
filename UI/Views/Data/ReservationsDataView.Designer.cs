@@ -38,26 +38,27 @@
             this.btnNew = new System.Windows.Forms.Button();
             this.panelAlertContainer1 = new UI.UserControls.PanelAlertContainer();
             this.alert = new UI.UserControls.UCAlert();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.panelForm = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.dateToControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
+            this.dateFromControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
+            this.priceControl = new UI.UserControls.UCVerticalTextBoxGroup();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblCustomerInfo = new System.Windows.Forms.Label();
             this.carControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.customerControl = new UI.UserControls.UCVerticalComboBoxGroup();
             this.lblCarInfo = new System.Windows.Forms.Label();
-            this.lblCustomerInfo = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.dateFromControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
-            this.dateToControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
-            this.priceControl = new UI.UserControls.UCVerticalTextBoxGroup();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lbPeriods = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelAlertContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.panelForm.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -72,8 +73,8 @@
             this.splitContainer.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer.Panel2.Controls.Add(this.panelAlertContainer1);
             this.splitContainer.Panel2.Controls.Add(this.panelForm);
-            this.splitContainer.Size = new System.Drawing.Size(578, 448);
-            this.splitContainer.SplitterDistance = 180;
+            this.splitContainer.Size = new System.Drawing.Size(578, 561);
+            this.splitContainer.SplitterDistance = 216;
             this.splitContainer.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -90,11 +91,11 @@
             this.tableLayoutPanel1.Controls.Add(this.btnSave, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnNew, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 160);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 238);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(578, 46);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(578, 45);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // btnCancle
@@ -156,7 +157,7 @@
             // 
             this.panelAlertContainer1.Controls.Add(this.alert);
             this.panelAlertContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 206);
+            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 283);
             this.panelAlertContainer1.Name = "panelAlertContainer1";
             this.panelAlertContainer1.Padding = new System.Windows.Forms.Padding(10);
             this.panelAlertContainer1.Size = new System.Drawing.Size(578, 58);
@@ -173,20 +174,63 @@
             this.alert.TabIndex = 0;
             this.alert.Visible = false;
             // 
-            // errorProvider
-            // 
-            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider.ContainerControl = this;
-            // 
             // panelForm
             // 
             this.panelForm.Controls.Add(this.tableLayoutPanel3);
+            this.panelForm.Controls.Add(this.lbPeriods);
             this.panelForm.Controls.Add(this.tableLayoutPanel2);
             this.panelForm.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelForm.Location = new System.Drawing.Point(0, 0);
             this.panelForm.Name = "panelForm";
-            this.panelForm.Size = new System.Drawing.Size(578, 160);
+            this.panelForm.Size = new System.Drawing.Size(578, 238);
             this.panelForm.TabIndex = 3;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.Controls.Add(this.dateToControl, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.dateFromControl, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.priceControl, 2, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 176);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(578, 62);
+            this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // dateToControl
+            // 
+            this.dateToControl.Date = new System.DateTime(2019, 4, 27, 0, 37, 46, 8);
+            this.dateToControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateToControl.LabelText = "Datum do";
+            this.dateToControl.Location = new System.Drawing.Point(195, 3);
+            this.dateToControl.Name = "dateToControl";
+            this.dateToControl.Size = new System.Drawing.Size(186, 56);
+            this.dateToControl.TabIndex = 1;
+            // 
+            // dateFromControl
+            // 
+            this.dateFromControl.Date = new System.DateTime(2019, 4, 27, 0, 37, 46, 8);
+            this.dateFromControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateFromControl.LabelText = "Datum od";
+            this.dateFromControl.Location = new System.Drawing.Point(3, 3);
+            this.dateFromControl.Name = "dateFromControl";
+            this.dateFromControl.Size = new System.Drawing.Size(186, 56);
+            this.dateFromControl.TabIndex = 0;
+            // 
+            // priceControl
+            // 
+            this.priceControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.priceControl.InputText = "";
+            this.priceControl.LabelText = "Cena";
+            this.priceControl.Location = new System.Drawing.Point(387, 3);
+            this.priceControl.Name = "priceControl";
+            this.priceControl.Size = new System.Drawing.Size(188, 56);
+            this.priceControl.TabIndex = 2;
             // 
             // tableLayoutPanel2
             // 
@@ -205,6 +249,16 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(578, 94);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // lblCustomerInfo
+            // 
+            this.lblCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCustomerInfo.Location = new System.Drawing.Point(292, 56);
+            this.lblCustomerInfo.Name = "lblCustomerInfo";
+            this.lblCustomerInfo.Size = new System.Drawing.Size(283, 38);
+            this.lblCustomerInfo.TabIndex = 3;
+            this.lblCustomerInfo.Text = "{{INCODE}}";
+            this.lblCustomerInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // carControl
             // 
@@ -238,62 +292,19 @@
             this.lblCarInfo.Text = "{{INCODE}}";
             this.lblCarInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblCustomerInfo
+            // errorProvider
             // 
-            this.lblCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCustomerInfo.Location = new System.Drawing.Point(292, 56);
-            this.lblCustomerInfo.Name = "lblCustomerInfo";
-            this.lblCustomerInfo.Size = new System.Drawing.Size(283, 38);
-            this.lblCustomerInfo.TabIndex = 3;
-            this.lblCustomerInfo.Text = "{{INCODE}}";
-            this.lblCustomerInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
             // 
-            // tableLayoutPanel3
+            // lbPeriods
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Controls.Add(this.dateToControl, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.dateFromControl, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.priceControl, 2, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 94);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(578, 66);
-            this.tableLayoutPanel3.TabIndex = 1;
-            // 
-            // dateFromControl
-            // 
-            this.dateFromControl.Date = new System.DateTime(2019, 4, 27, 0, 37, 46, 8);
-            this.dateFromControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateFromControl.LabelText = "Datum od";
-            this.dateFromControl.Location = new System.Drawing.Point(3, 3);
-            this.dateFromControl.Name = "dateFromControl";
-            this.dateFromControl.Size = new System.Drawing.Size(186, 60);
-            this.dateFromControl.TabIndex = 0;
-            // 
-            // dateToControl
-            // 
-            this.dateToControl.Date = new System.DateTime(2019, 4, 27, 0, 37, 46, 8);
-            this.dateToControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateToControl.LabelText = "Datum do";
-            this.dateToControl.Location = new System.Drawing.Point(195, 3);
-            this.dateToControl.Name = "dateToControl";
-            this.dateToControl.Size = new System.Drawing.Size(186, 60);
-            this.dateToControl.TabIndex = 1;
-            // 
-            // priceControl
-            // 
-            this.priceControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.priceControl.InputText = "";
-            this.priceControl.LabelText = "Cena";
-            this.priceControl.Location = new System.Drawing.Point(387, 3);
-            this.priceControl.Name = "priceControl";
-            this.priceControl.Size = new System.Drawing.Size(188, 60);
-            this.priceControl.TabIndex = 2;
+            this.lbPeriods.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lbPeriods.FormattingEnabled = true;
+            this.lbPeriods.Location = new System.Drawing.Point(0, 94);
+            this.lbPeriods.Name = "lbPeriods";
+            this.lbPeriods.Size = new System.Drawing.Size(578, 82);
+            this.lbPeriods.TabIndex = 1;
             // 
             // ReservationsDataView
             // 
@@ -301,16 +312,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer);
             this.Name = "ReservationsDataView";
-            this.Size = new System.Drawing.Size(578, 448);
+            this.Size = new System.Drawing.Size(578, 561);
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelAlertContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.panelForm.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -337,5 +348,6 @@
         private UserControls.UCVerticalComboBoxGroup carControl;
         private UserControls.UCVerticalComboBoxGroup customerControl;
         private System.Windows.Forms.Label lblCarInfo;
+        private System.Windows.Forms.ListBox lbPeriods;
     }
 }

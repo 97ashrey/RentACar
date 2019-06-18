@@ -8,6 +8,7 @@ using RentACarLibrary.Models;
 using UI.Events;
 using UI.Events.Messages;
 using UI.Helpers;
+using UI.Models;
 using UI.Views.Data;
 
 namespace UI.Presenters.Data
@@ -27,8 +28,7 @@ namespace UI.Presenters.Data
 
         protected override void LoadData()
         {
-            //UserModel currentUser = RentACarLibrary.SessionData.CurrentUser();
-            UserModel currentUser = RentACarLibrary.GlobalConfig.UserModelConnection.GetByUsername("ashrey97");
+            UserModel currentUser = RentACarLibrary.SessionData.CurrentUser;
             ReservationModel[] reservations = DataConnection.Filter(model => model.UserID == currentUser.ID);
             List<ReservationModelWrapper> wrappedResevations = new List<ReservationModelWrapper>();
             foreach(ReservationModel model in reservations)

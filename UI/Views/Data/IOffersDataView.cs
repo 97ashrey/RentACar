@@ -17,6 +17,7 @@ namespace UI.Views.Data
         event EventHandler CarSelectedTrigger;
 
         string CarInfo { get; set; }
+        object FreePeriodDisplayDataSource { get; set; }
 
         object CarIDsDataSource { get; set; }
 
@@ -28,7 +29,10 @@ namespace UI.Views.Data
         bool UpdateOfferTriggerEnabled { get; set; }
         bool DeleteOfferTriggerEnabled { get; set; }
 
-        bool AllInputsEnabled { get; set; }
+        bool PricePerDayInputEnabled { get; set; }
+        bool CarIDInputEnabled { get; set; }
 
+
+        bool AllInputsEnabled { get; set; }
     }
 }

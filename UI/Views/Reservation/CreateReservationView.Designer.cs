@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbOffers = new System.Windows.Forms.ListBox();
+            this.lbPeriods = new System.Windows.Forms.ListBox();
             this.dateFromControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
             this.dateToControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
             this.priceControl = new UI.UserControls.UCVerticalTextBoxGroup();
@@ -39,14 +39,14 @@
             this.panelBtnContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lbOffers
+            // lbPeriods
             // 
-            this.lbOffers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lbOffers.FormattingEnabled = true;
-            this.lbOffers.Location = new System.Drawing.Point(0, 0);
-            this.lbOffers.Name = "lbOffers";
-            this.lbOffers.Size = new System.Drawing.Size(395, 121);
-            this.lbOffers.TabIndex = 0;
+            this.lbPeriods.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lbPeriods.FormattingEnabled = true;
+            this.lbPeriods.Location = new System.Drawing.Point(0, 0);
+            this.lbPeriods.Name = "lbPeriods";
+            this.lbPeriods.Size = new System.Drawing.Size(395, 121);
+            this.lbPeriods.TabIndex = 0;
             // 
             // dateFromControl
             // 
@@ -105,6 +105,7 @@
             this.btnCreate.TabIndex = 0;
             this.btnCreate.Text = "Rezerviši";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // CreateReservationView
             // 
@@ -112,7 +113,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelBtnContainer);
             this.Controls.Add(this.panelForm);
-            this.Controls.Add(this.lbOffers);
+            this.Controls.Add(this.lbPeriods);
             this.Name = "CreateReservationView";
             this.Size = new System.Drawing.Size(395, 301);
             this.panelForm.ResumeLayout(false);
@@ -123,7 +124,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lbOffers;
+        private System.Windows.Forms.ListBox lbPeriods;
         private UserControls.UCVerticalDateTimePickerGroup dateFromControl;
         private UserControls.UCVerticalDateTimePickerGroup dateToControl;
         private UserControls.UCVerticalTextBoxGroup priceControl;

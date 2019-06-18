@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Events.Messages;
 
 namespace UI.Views.Reservation
 {
-    public partial class MakeReservationView : UserControl
+    public partial class MakeReservationView : UserControl, IMakeReservationView
     {
         private Control carFilterView;
         private Control carSelectView;
         private Control createReservationView;
+
+        public object Presenter { private get; set; }
 
         protected MakeReservationView()
         {
@@ -30,12 +33,17 @@ namespace UI.Views.Reservation
             this.carSelectView = carSelectView;
             this.createReservationView = createReservationView;
             
-            this.carFilterView.Dock = DockStyle.Fill;
-            ucCollapse.Content.Controls.Add(this.carFilterView);
-            this.carSelectView.Dock = DockStyle.Fill;
+            //this.carFilterView.Dock = DockStyle.Top;
+            ucCollapse.AddControl(this.carFilterView);
+            this.carSelectView.Dock = DockStyle.Top;
             panelCarSelect.Controls.Add(this.carSelectView);
-            this.createReservationView.Dock = DockStyle.Fill;
+            this.createReservationView.Dock = DockStyle.Top;
             panelMakeReservation.Controls.Add(this.createReservationView);
+        }
+
+        public void ShowAlertMessage(AlertMessage alertMessage)
+        {
+            ucAlert.Display(alertMessage);
         }
     }
 }

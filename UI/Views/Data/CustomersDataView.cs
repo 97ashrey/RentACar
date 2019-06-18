@@ -70,6 +70,8 @@ namespace UI.Views.Data
             this.table = table;
             this.table.Dock = DockStyle.Fill;
             this.splitContainer.Panel1.Controls.Add(this.table);
+
+            passwordControl.TextBox.PasswordChar = '*';
         }
 
         private Dictionary<string, Control> controls = new Dictionary<string, Control>();
@@ -86,6 +88,8 @@ namespace UI.Views.Data
             phoneControl.TextBox.Tag = "Broj telefona";
             controls.Add("DateOfBirth", dateOfBirthControl.DateTimePicker);
             dateOfBirthControl.DateTimePicker.Tag = "Datum rodjenja";
+            controls.Add("Password", passwordControl.TextBox);
+            passwordControl.TextBox.Tag = "Lozinka";
         }
 
         public object Presenter { private get; set; }
@@ -100,7 +104,7 @@ namespace UI.Views.Data
         public string UMCN { get => umcnControl.InputText.Trim(); set => umcnControl.InputText = value; }
         public string PhoneNumber { get => phoneControl.InputText.Trim(); set => phoneControl.InputText = value; }
         public DateTime DateOfBirth { get => dateOfBirthControl.Date; set => dateOfBirthControl.Date = value; }
-
+        public string Password { get => passwordControl.InputText.Trim(); set => passwordControl.InputText = value; }
         public event EventHandler RegisterNewCustomerTrigger;
         public event EventHandler UpdateCustomerTrigger;
         public event EventHandler DeleteCustomerTrigger;
@@ -113,6 +117,10 @@ namespace UI.Views.Data
             // check if fields are empty
             foreach (string key in controls.Keys)
             {
+                if(key == "Password")
+                {
+                    continue;
+                }
                 TextBox tb = controls[key] as TextBox;
                 if (tb == null)
                 {
@@ -128,14 +136,14 @@ namespace UI.Views.Data
             }
 
             // check UMCN for correct length
-            if (umcnControl.TextBox.Text.Length < Constants.UMCN_MAX_LENGTH)
+            if (umcnControl.InputText.Length < Constants.UMCN_MAX_LENGTH)
             {
                 errorProvider.SetError(umcnControl.TextBox, Messages.ErrorInvalidUMCNFormat());
                 valid = false;
             }
 
             // check PhoneNumber for correct length
-            if (phoneControl.TextBox.Text.Length < Constants.PHONE_NUMBER_MAX_LENGTH)
+            if (phoneControl.InputText.Length < Constants.PHONE_NUMBER_MAX_LENGTH)
             {
                 // TODO display error message
                 errorProvider.SetError(phoneControl.TextBox, Messages.ErrorInvalidPhoneNumberFormat());
@@ -143,27 +151,13 @@ namespace UI.Views.Data
             }
 
             // Check if the date is not in the future
-            if (dateOfBirthControl.DateTimePicker.Value > DateTime.Today)
+            if (dateOfBirthControl.Date > DateTime.Today)
             {
                 errorProvider.SetError(dateOfBirthControl.DateTimePicker, Messages.ERROR_DATE_IN_FUTURE);
                 valid = false;
             }
 
-            foreach (string key in controls.Keys)
-            {
-                Control control = controls[key];
-                if (errorProvider.ControlHasError(control))
-                {
-                    if(control is TextBox)
-                    {
-                        TextBox tb = control as TextBox;
-                        tb.SelectedFocus();
-                        break;
-                    }
-                    control.Focus();
-                    break;
-                }
-            }
+            FocusOnTopError();
 
             return valid;
         }
@@ -205,6 +199,34 @@ namespace UI.Views.Data
                     return;
                 }
                 control.Focus();
+            }
+        }
+
+        public void FocusOnTopError()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                if (errorProvider.ControlHasError(control))
+                {
+                    if (control is TextBox)
+                    {
+                        TextBox tb = control as TextBox;
+                        tb.SelectedFocus();
+                        break;
+                    }
+                    control.Focus();
+                    break;
+                }
+            }
+        }
+
+        public void ClearAllControlErrors()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
             }
         }
 

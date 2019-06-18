@@ -41,8 +41,13 @@
             // panelSide
             // 
             this.panelSide.Controls.Add(this.flpButtons);
-            this.panelSide.Size = new System.Drawing.Size(158, 509);
+            this.panelSide.Size = new System.Drawing.Size(158, 595);
             this.panelSide.Controls.SetChildIndex(this.flpButtons, 0);
+            // 
+            // panelMain
+            // 
+            this.panelMain.Location = new System.Drawing.Point(158, 0);
+            this.panelMain.Size = new System.Drawing.Size(685, 595);
             // 
             // btnCustomers
             // 
@@ -55,7 +60,7 @@
             // 
             // btnCars
             // 
-            this.btnCars.Location = new System.Drawing.Point(13, 177);
+            this.btnCars.Location = new System.Drawing.Point(13, 54);
             this.btnCars.Name = "btnCars";
             this.btnCars.Size = new System.Drawing.Size(131, 35);
             this.btnCars.TabIndex = 1;
@@ -64,25 +69,25 @@
             // 
             // btnOffers
             // 
-            this.btnOffers.Location = new System.Drawing.Point(13, 95);
+            this.btnOffers.Location = new System.Drawing.Point(13, 136);
             this.btnOffers.Name = "btnOffers";
             this.btnOffers.Size = new System.Drawing.Size(131, 35);
-            this.btnOffers.TabIndex = 2;
+            this.btnOffers.TabIndex = 3;
             this.btnOffers.Text = "Ponude";
             this.btnOffers.UseVisualStyleBackColor = true;
             // 
             // btnReservations
             // 
-            this.btnReservations.Location = new System.Drawing.Point(13, 54);
+            this.btnReservations.Location = new System.Drawing.Point(13, 95);
             this.btnReservations.Name = "btnReservations";
             this.btnReservations.Size = new System.Drawing.Size(131, 35);
-            this.btnReservations.TabIndex = 3;
+            this.btnReservations.TabIndex = 2;
             this.btnReservations.Text = "Rezervacije";
             this.btnReservations.UseVisualStyleBackColor = true;
             // 
             // btnStatistics
             // 
-            this.btnStatistics.Location = new System.Drawing.Point(13, 136);
+            this.btnStatistics.Location = new System.Drawing.Point(13, 177);
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(131, 35);
             this.btnStatistics.TabIndex = 4;
@@ -92,23 +97,23 @@
             // flpButtons
             // 
             this.flpButtons.Controls.Add(this.btnCustomers);
+            this.flpButtons.Controls.Add(this.btnCars);
             this.flpButtons.Controls.Add(this.btnReservations);
             this.flpButtons.Controls.Add(this.btnOffers);
             this.flpButtons.Controls.Add(this.btnStatistics);
-            this.flpButtons.Controls.Add(this.btnCars);
             this.flpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpButtons.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpButtons.Location = new System.Drawing.Point(0, 90);
             this.flpButtons.Name = "flpButtons";
             this.flpButtons.Padding = new System.Windows.Forms.Padding(10);
-            this.flpButtons.Size = new System.Drawing.Size(158, 419);
+            this.flpButtons.Size = new System.Drawing.Size(158, 505);
             this.flpButtons.TabIndex = 1;
             // 
             // AdminView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 509);
+            this.ClientSize = new System.Drawing.Size(843, 595);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "AdminView";

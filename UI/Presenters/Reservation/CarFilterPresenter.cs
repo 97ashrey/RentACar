@@ -29,6 +29,7 @@ namespace UI.Presenters.Reservation
             view.LoadedTrigger += LoadHandler;
             view.BrandPickedTriggered += BrandPickedHandler;
             view.FindCarsTriggered += FindCarsHandler;
+            view.FilterResetTriggered += FilterResetHandler;
         }
 
         private List<string> AddDefaultChoice(List<string> list)
@@ -94,7 +95,7 @@ namespace UI.Presenters.Reservation
                         }
                     }
                     // Check for created year and cubic capacity ranges
-                    bool cubicValuesPicked = view.CubicCapacityFrom.ValuePicked() && view.CubicCapacityFrom.ValuePicked();
+                    bool cubicValuesPicked = view.CubicCapacityFrom.ValuePicked() && view.CubicCapacityTo.ValuePicked();
                     if (cubicValuesPicked)
                     {
                         double cubicCapacityFrom = double.Parse(view.CubicCapacityFrom);
@@ -124,6 +125,21 @@ namespace UI.Presenters.Reservation
             // send selected cars via event aggregator
             CarsFoundMessage carsFoundMessage = new CarsFoundMessage(cars);
             eventAggregator.Publish(carsFoundMessage);
+            if(cars.Length > 0)
+            {
+                AlertMessage successMessage = new AlertMessage(
+                        AlertMessage.MessageType.Success,
+                        "Pronašli smo željene automobile");
+                eventAggregator.Publish(successMessage);
+            }
+            else
+            {
+                AlertMessage warningMessage = new AlertMessage(
+                       AlertMessage.MessageType.Warning,
+                       "Nismo pronašli željene automobile");
+                eventAggregator.Publish(warningMessage);
+            }
+ 
         }
 
         private Dictionary<string,string> GetFilterValues()
@@ -132,31 +148,31 @@ namespace UI.Presenters.Reservation
             #region Value Adding
             if(view.Brand.ValuePicked())
             {
-                values.Add("Brand", view.Brand);
+                values.Add("Brand", view.Brand.ToLower());
             }
             if(view.Model .ValuePicked())
             {
-                values.Add("Model", view.Model);
+                values.Add("Model", view.Model.ToLower());
             }
             if(view.CarBody.ValuePicked())
             {
-                values.Add("CarBody", view.CarBody);
+                values.Add("CarBody", view.CarBody.ToLower());
             }
             if(view.DorCount.ValuePicked())
             {
-                values.Add("DorCount", view.DorCount);
+                values.Add("DorCount", view.DorCount.ToLower());
             }
             if (view.FuelType.ValuePicked())
             {
-                values.Add("FuelType", view.FuelType);
+                values.Add("FuelType", view.FuelType.ToLower());
             }
             if (view.ShiftType.ValuePicked())
             {
-                values.Add("ShiftType", view.ShiftType);
+                values.Add("ShiftType", view.ShiftType.ToLower());
             }
             if (view.DriveType.ValuePicked())
             {
-                values.Add("DriveType", view.DriveType);
+                values.Add("DriveType", view.DriveType.ToLower());
             }
             #endregion
             return values;
@@ -183,5 +199,12 @@ namespace UI.Presenters.Reservation
         {
             FindCars();
         }
+
+        private void FilterResetHandler(object sender, EventArgs e)
+        {
+            view.ClearAllControls();
+            //FindCars();
+        }
+
     }
 }

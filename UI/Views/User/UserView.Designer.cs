@@ -81,6 +81,7 @@
             this.Controls.Add(this.panelSide);
             this.Name = "UserView";
             this.Text = "UserView";
+            this.Load += new System.EventHandler(this.UserView_Load);
             this.panelSide.ResumeLayout(false);
             this.panelUser.ResumeLayout(false);
             this.ResumeLayout(false);

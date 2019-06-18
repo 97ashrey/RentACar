@@ -15,6 +15,8 @@ namespace UI.Views.Data
         event EventHandler DeleteReservationTrigger;
         event EventHandler CancleTrigger;
 
+        event EventHandler DatePicked;
+
         event EventHandler CarSelectedTrigger;
         event EventHandler CustomerSelectedTrigger;
 
@@ -23,6 +25,8 @@ namespace UI.Views.Data
 
         object CarDataSource { get; set; }
         string CarDisplayMember { get; set; }
+
+        object PeriodsDataSource { get; set; }
 
         object CustomerDataSource { get; set; }
         string CustomerDisplayMember { get; set; }
@@ -33,5 +37,12 @@ namespace UI.Views.Data
         bool DeleteReservationTriggerEnabled { get; set; }
 
         bool AllInputsEnabled { get; set; }
+
+        bool CarSelectorEnabled { get; set; }
+        bool CustomerSelectorEnabled { get; set; }
+
+        bool DateFromSelectorEnabled { get; set; }
+
+
     }
 }

@@ -110,21 +110,7 @@ namespace UI.Views.Login
                 valid = false;
             }
 
-            foreach (string key in controls.Keys)
-            {
-                Control control = controls[key];
-                if (errorProvider.ControlHasError(control))
-                {
-                    if (control is TextBox)
-                    {
-                        TextBox tb = control as TextBox;
-                        tb.SelectedFocus();
-                        break;
-                    }
-                    control.Focus();
-                    break;
-                }
-            }
+            FocusOnTopError();
 
             return valid;
         }
@@ -174,6 +160,35 @@ namespace UI.Views.Login
             usernameControl.TextBox.Focus();
         }
 
+        public void ClearAllControlErrors()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                errorProvider.ClearError(control);
+            }
+        }
+
+        public void FocusOnTopError()
+        {
+            foreach (string key in controls.Keys)
+            {
+                Control control = controls[key];
+                if (errorProvider.ControlHasError(control))
+                {
+                    if (control is TextBox)
+                    {
+                        TextBox tb = control as TextBox;
+                        tb.SelectedFocus();
+                        break;
+                    }
+                    control.Focus();
+                    break;
+                }
+            }
+        }
+
+        // Event handlers
         private void ClearControlErrorOnValueChangedHandler(object sender, EventArgs e)
         {
             Control control = sender as Control;

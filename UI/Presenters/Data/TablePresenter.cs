@@ -45,7 +45,8 @@ namespace UI.Presenters.Data
 
         protected virtual string GetDeleteConfirmMessage()
         {
-            return $"Želite da obrišete {view.SelectedIndexes.Length} zapisa?";
+            string count = view.SelectedIndexes.Length == 1 ? "zapis" : "zapisa";
+            return $"Želite da obrišete {view.SelectedIndexes.Length} {count}?";
         }
 
         protected virtual void SendCrudMessage(CrudOperationMessage.CrudOperation operation, CrudOperationMessage.CrudResult result)
@@ -55,13 +56,15 @@ namespace UI.Presenters.Data
             eventAggregator.Publish<CrudOperationMessage>(crudMessage);
         }
 
+        // Overidable steps for crud handlers
         protected virtual bool ConfirmDeleteion()
         {
             DialogResult result = MessageBox.Show(
                             view as IWin32Window,
                             GetDeleteConfirmMessage(),
                             "Upozorenje",
-                            MessageBoxButtons.YesNo);
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning);
             return (result == DialogResult.Yes)? true: false;
         }
 
@@ -70,6 +73,21 @@ namespace UI.Presenters.Data
             T model = (T)dataSource[index];
             model = DataConnection.Delete(model.ID);
             return model;
+        }
+
+        protected virtual void UpdateRecord(int index, T data)
+        {
+            dataSource[index] = data;
+        }
+
+        protected virtual T GetSelectedRecord(int index)
+        {
+            return (T)dataSource.List[index];
+        }
+
+        protected virtual void AddNewRecord(T data)
+        {
+            dataSource.Add(data);
         }
 
         // Event Handlers
@@ -102,13 +120,15 @@ namespace UI.Presenters.Data
 
         protected virtual void SendSelectedRecordMessage(int index)
         {
-            T selectedRecord = (T)dataSource.List[index] ;
+            T selectedRecord = GetSelectedRecord(index);
             SelectedRecordMessage<T> recordMessage = new SelectedRecordMessage<T>(selectedRecord, index);
             eventAggregator.Publish(recordMessage);
         }
 
+        // Crud Handlers
         protected virtual void UpdateRecordHandler(UpdateRecordMessage<T> message)
         {
+            // index out of range error
             bool indexInList = dataSource.Count > message.Index;
             if (!indexInList)
             {
@@ -117,7 +137,7 @@ namespace UI.Presenters.Data
                     CrudOperationMessage.CrudResult.Error);
                 return;
             }
-            T record = (T)DataConnection.Update(message.Record);
+            T record = DataConnection.Update(message.Record);
             if (record == null)
             {
                 SendCrudMessage(
@@ -125,7 +145,9 @@ namespace UI.Presenters.Data
                     CrudOperationMessage.CrudResult.Error);
                 return;
             }
-            dataSource[message.Index] = message.Record;
+            // this part needs to be overidable
+            UpdateRecord(message.Index, message.Record);
+            //dataSource[message.Index] = message.Record;
             view.RefreshTable();
             // Raise update success
             SendCrudMessage(
@@ -133,7 +155,6 @@ namespace UI.Presenters.Data
                      CrudOperationMessage.CrudResult.Success);
         }
 
-        // Template Method
         protected virtual void DeleteSelectedRecordsHandler(DeleteSelectedRecordsMessage message)
         {
             int numberOfRecords = view.SelectedIndexes.Length;
@@ -154,7 +175,7 @@ namespace UI.Presenters.Data
                 T model = DeleteRecord(index);
                 if (model == null)
                 {
-                    // TODO raise error
+                    // TODO mybe raise error
                     continue;
                 }
                 dataSource.RemoveAt(index);
@@ -162,13 +183,16 @@ namespace UI.Presenters.Data
             }
             view.DataSource = dataSource;
             // Raise deletion success
-            AlertMessage alertMessage =
-                new AlertMessage(
-                    AlertMessage.MessageType.Success,
-                    Messages.MessageDeletionSuccess(deletedRecords, numberOfRecords)
-                    );
-            eventAggregator.Publish(alertMessage);
-            SendCrudMessage(CrudOperationMessage.CrudOperation.Delete, CrudOperationMessage.CrudResult.Success);
+            if (deletedRecords != 0)
+            {
+                AlertMessage alertMessage =
+                    new AlertMessage(
+                        AlertMessage.MessageType.Success,
+                        Messages.MessageDeletionSuccess(deletedRecords, numberOfRecords)
+                        );
+                eventAggregator.Publish(alertMessage);
+                SendCrudMessage(CrudOperationMessage.CrudOperation.Delete, CrudOperationMessage.CrudResult.Success);
+            }
         }
 
         protected virtual void AddRecordHandler(AddRecordMessage<T> message)
@@ -179,7 +203,7 @@ namespace UI.Presenters.Data
                 SendCrudMessage(CrudOperationMessage.CrudOperation.Create, CrudOperationMessage.CrudResult.Error);
                 return;
             }
-            dataSource.Add(newRecord);
+            AddNewRecord(newRecord);
             SendCrudMessage(CrudOperationMessage.CrudOperation.Create, CrudOperationMessage.CrudResult.Success);
         }
 

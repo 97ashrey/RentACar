@@ -35,22 +35,23 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.firstNameControl = new UI.UserControls.UCVerticalTextBoxGroup();
-            this.lastNameControl = new UI.UserControls.UCVerticalTextBoxGroup();
-            this.dateOfBirthControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
-            this.umcnControl = new UI.UserControls.UCVerticalTextBoxGroup();
-            this.phoneControl = new UI.UserControls.UCVerticalTextBoxGroup();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.alert = new UI.UserControls.UCAlert();
-            this.panelAlertContainer1 = new UI.UserControls.PanelAlertContainer();
             this.panelForm = new System.Windows.Forms.TableLayoutPanel();
+            this.dateOfBirthControl = new UI.UserControls.UCVerticalDateTimePickerGroup();
+            this.firstNameControl = new UI.UserControls.UCVerticalTextBoxGroup();
+            this.phoneControl = new UI.UserControls.UCVerticalTextBoxGroup();
+            this.lastNameControl = new UI.UserControls.UCVerticalTextBoxGroup();
+            this.umcnControl = new UI.UserControls.UCVerticalTextBoxGroup();
+            this.panelAlertContainer1 = new UI.UserControls.PanelAlertContainer();
+            this.alert = new UI.UserControls.UCAlert();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.passwordControl = new UI.UserControls.UCVerticalTextBoxGroup();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.panelAlertContainer1.SuspendLayout();
             this.panelForm.SuspendLayout();
+            this.panelAlertContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -132,23 +133,26 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // firstNameControl
+            // panelForm
             // 
-            this.firstNameControl.InputText = "";
-            this.firstNameControl.LabelText = "Ime";
-            this.firstNameControl.Location = new System.Drawing.Point(3, 3);
-            this.firstNameControl.Name = "firstNameControl";
-            this.firstNameControl.Size = new System.Drawing.Size(188, 53);
-            this.firstNameControl.TabIndex = 1;
-            // 
-            // lastNameControl
-            // 
-            this.lastNameControl.InputText = "";
-            this.lastNameControl.LabelText = "Prezime";
-            this.lastNameControl.Location = new System.Drawing.Point(197, 3);
-            this.lastNameControl.Name = "lastNameControl";
-            this.lastNameControl.Size = new System.Drawing.Size(188, 53);
-            this.lastNameControl.TabIndex = 2;
+            this.panelForm.ColumnCount = 3;
+            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.panelForm.Controls.Add(this.dateOfBirthControl, 2, 0);
+            this.panelForm.Controls.Add(this.firstNameControl, 0, 0);
+            this.panelForm.Controls.Add(this.phoneControl, 1, 1);
+            this.panelForm.Controls.Add(this.lastNameControl, 1, 0);
+            this.panelForm.Controls.Add(this.umcnControl, 0, 1);
+            this.panelForm.Controls.Add(this.passwordControl, 2, 1);
+            this.panelForm.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelForm.Location = new System.Drawing.Point(0, 0);
+            this.panelForm.Name = "panelForm";
+            this.panelForm.RowCount = 2;
+            this.panelForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.panelForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.panelForm.Size = new System.Drawing.Size(583, 122);
+            this.panelForm.TabIndex = 13;
             // 
             // dateOfBirthControl
             // 
@@ -159,14 +163,14 @@
             this.dateOfBirthControl.Size = new System.Drawing.Size(186, 53);
             this.dateOfBirthControl.TabIndex = 3;
             // 
-            // umcnControl
+            // firstNameControl
             // 
-            this.umcnControl.InputText = "";
-            this.umcnControl.LabelText = "JMBG";
-            this.umcnControl.Location = new System.Drawing.Point(3, 64);
-            this.umcnControl.Name = "umcnControl";
-            this.umcnControl.Size = new System.Drawing.Size(188, 53);
-            this.umcnControl.TabIndex = 4;
+            this.firstNameControl.InputText = "";
+            this.firstNameControl.LabelText = "Ime";
+            this.firstNameControl.Location = new System.Drawing.Point(3, 3);
+            this.firstNameControl.Name = "firstNameControl";
+            this.firstNameControl.Size = new System.Drawing.Size(188, 53);
+            this.firstNameControl.TabIndex = 1;
             // 
             // phoneControl
             // 
@@ -177,10 +181,33 @@
             this.phoneControl.Size = new System.Drawing.Size(188, 53);
             this.phoneControl.TabIndex = 5;
             // 
-            // errorProvider
+            // lastNameControl
             // 
-            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider.ContainerControl = this;
+            this.lastNameControl.InputText = "";
+            this.lastNameControl.LabelText = "Prezime";
+            this.lastNameControl.Location = new System.Drawing.Point(197, 3);
+            this.lastNameControl.Name = "lastNameControl";
+            this.lastNameControl.Size = new System.Drawing.Size(188, 53);
+            this.lastNameControl.TabIndex = 2;
+            // 
+            // umcnControl
+            // 
+            this.umcnControl.InputText = "";
+            this.umcnControl.LabelText = "JMBG";
+            this.umcnControl.Location = new System.Drawing.Point(3, 64);
+            this.umcnControl.Name = "umcnControl";
+            this.umcnControl.Size = new System.Drawing.Size(188, 53);
+            this.umcnControl.TabIndex = 4;
+            // 
+            // panelAlertContainer1
+            // 
+            this.panelAlertContainer1.Controls.Add(this.alert);
+            this.panelAlertContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 166);
+            this.panelAlertContainer1.Name = "panelAlertContainer1";
+            this.panelAlertContainer1.Padding = new System.Windows.Forms.Padding(10);
+            this.panelAlertContainer1.Size = new System.Drawing.Size(583, 58);
+            this.panelAlertContainer1.TabIndex = 12;
             // 
             // alert
             // 
@@ -193,35 +220,19 @@
             this.alert.TabIndex = 11;
             this.alert.Visible = false;
             // 
-            // panelAlertContainer1
+            // errorProvider
             // 
-            this.panelAlertContainer1.Controls.Add(this.alert);
-            this.panelAlertContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAlertContainer1.Location = new System.Drawing.Point(0, 166);
-            this.panelAlertContainer1.Name = "panelAlertContainer1";
-            this.panelAlertContainer1.Padding = new System.Windows.Forms.Padding(10);
-            this.panelAlertContainer1.Size = new System.Drawing.Size(583, 58);
-            this.panelAlertContainer1.TabIndex = 12;
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
             // 
-            // panelForm
+            // passwordControl
             // 
-            this.panelForm.ColumnCount = 3;
-            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.panelForm.Controls.Add(this.dateOfBirthControl, 2, 0);
-            this.panelForm.Controls.Add(this.firstNameControl, 0, 0);
-            this.panelForm.Controls.Add(this.phoneControl, 1, 1);
-            this.panelForm.Controls.Add(this.lastNameControl, 1, 0);
-            this.panelForm.Controls.Add(this.umcnControl, 0, 1);
-            this.panelForm.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelForm.Location = new System.Drawing.Point(0, 0);
-            this.panelForm.Name = "panelForm";
-            this.panelForm.RowCount = 2;
-            this.panelForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.panelForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.panelForm.Size = new System.Drawing.Size(583, 122);
-            this.panelForm.TabIndex = 13;
+            this.passwordControl.InputText = "";
+            this.passwordControl.LabelText = "Lozinka";
+            this.passwordControl.Location = new System.Drawing.Point(391, 64);
+            this.passwordControl.Name = "passwordControl";
+            this.passwordControl.Size = new System.Drawing.Size(185, 53);
+            this.passwordControl.TabIndex = 6;
             // 
             // CustomersDataView
             // 
@@ -234,9 +245,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.panelAlertContainer1.ResumeLayout(false);
             this.panelForm.ResumeLayout(false);
+            this.panelAlertContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -257,5 +268,6 @@
         private UserControls.UCAlert alert;
         private UserControls.PanelAlertContainer panelAlertContainer1;
         private System.Windows.Forms.TableLayoutPanel panelForm;
+        private UserControls.UCVerticalTextBoxGroup passwordControl;
     }
 }

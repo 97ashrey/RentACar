@@ -35,6 +35,7 @@ namespace UI.Presenters.Reservation
             if(cars.Length == 0)
             {
                 view.CarInfo = "";
+                eventAggregator.Publish(new CarSelectedMessage(null));
             }
         }
 
@@ -49,6 +50,8 @@ namespace UI.Presenters.Reservation
             }
 
             view.CarInfo = car.CarInfo();
+
+            eventAggregator.Publish(new CarSelectedMessage(car));
         }
 
         private void CarsFoundHandler(CarsFoundMessage message)

@@ -20,6 +20,8 @@ namespace UI.Presenters.Data
 
         private SelectedRecordMessage<UserModel> selectedCustomer;
 
+        private bool subscribedToUpdateStateTrigger = false;
+
         public CustomersDataPresenter(ICustomersDataView view, IEventAggregator eventAggregator)
         {
             this.view = view;
@@ -38,6 +40,24 @@ namespace UI.Presenters.Data
             view.CancleTrigger += CancelTriggerHandler;
         }
 
+        private void SubscribeToUpdateStateTrigger()
+        {
+            if (!subscribedToUpdateStateTrigger)
+            {
+                eventAggregator.Subscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+                subscribedToUpdateStateTrigger = true;
+            }
+        }
+
+        private void UnSubscribeFromUpdateStateTrigger()
+        {
+            if (subscribedToUpdateStateTrigger)
+            {
+                eventAggregator.Unsubscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+                subscribedToUpdateStateTrigger = false;
+            }
+        }
+
         private void PopulateView(CustomerModel customer)
         {
             view.FirstName = customer.FirstName;
@@ -54,6 +74,7 @@ namespace UI.Presenters.Data
             customer.UMCN = view.UMCN;
             customer.PhoneNumber = view.PhoneNumber;
             customer.DateOfBirth = view.DateOfBirth.Date;
+            customer.Password = (view.Password != "") ? view.Password : customer.Password;
         }
 
         private void SetStateDefault()
@@ -65,7 +86,8 @@ namespace UI.Presenters.Data
             view.RegisterNewCustomerTriggerEnabled = true;
             view.UpdateCustomerTriggerEnabled = false;
             view.DeleteCustomerTriggerEnabled = true;
-            eventAggregator.Subscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+            view.ClearAllControlErrors();
+            SubscribeToUpdateStateTrigger();
             eventAggregator.Unsubscribe<SelectedRecordMessage<UserModel>>(RecordSelectedHandler);
         }
 
@@ -75,7 +97,7 @@ namespace UI.Presenters.Data
             view.RegisterNewCustomerTriggerEnabled = false;
             view.UpdateCustomerTriggerEnabled = true;
             view.DeleteCustomerTriggerEnabled = false;
-            eventAggregator.Unsubscribe<ToUpdateStateMessage>(ToUpdateStateMessageHandler);
+            UnSubscribeFromUpdateStateTrigger();
             eventAggregator.Subscribe<SelectedRecordMessage<UserModel>>(RecordSelectedHandler);
         }
 
@@ -139,6 +161,8 @@ namespace UI.Presenters.Data
             UpdateRecordMessage<UserModel> updateMessage = 
                 new UpdateRecordMessage<UserModel>(customer, selectedCustomer.Index);
             eventAggregator.Publish(updateMessage);
+
+            SetStateDefault();
         }
 
         private void DeleteTriggerHandler(object sender, EventArgs e)

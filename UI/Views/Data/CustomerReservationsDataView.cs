@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Events.Messages;
 
 namespace UI.Views.Data
 {
@@ -29,6 +30,11 @@ namespace UI.Views.Data
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             CancleReservationTriggered?.Invoke(this, e);
+        }
+
+        public void ShowAlertMessage(AlertMessage alertMessage)
+        {
+            alert.Display(alertMessage);
         }
 
         public CustomerReservationsDataView(Control table) : this()

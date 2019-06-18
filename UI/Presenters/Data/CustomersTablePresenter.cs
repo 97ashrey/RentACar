@@ -64,15 +64,52 @@ namespace UI.Presenters.Data
             view.CreateColumns(columnsInfo);
         }
 
-        protected override void DeleteSelectedRecordsHandler(DeleteSelectedRecordsMessage message)
+        protected override UserModel DeleteRecord(int index)
         {
-            MessageBox.Show("Cascade Delete before user delete");
-            base.DeleteSelectedRecordsHandler(message);
-        }
+            CustomerModel customer = dataSource[index] as CustomerModel;
+            // find reservations
+            ReservationModel[] reservations = RentACarLibrary.GlobalConfig.ReservationModelConection
+               .Filter(model => model.UserID == customer.ID);
 
-        protected override bool ConfirmDeleteion()
-        {
-            return base.ConfirmDeleteion();
+            ReservationModel[] activeReservations = reservations
+                .Where(model => {
+                    TimePeriod period = new TimePeriod(model.From, model.To);
+                    return period.HasInside(DateTime.Today) || period.IsAfter(DateTime.Today);
+                })
+                .ToArray();
+
+            ReservationModel[] inActiveReservations = reservations
+                .Where(model => {
+                    TimePeriod period = new TimePeriod(model.From, model.To);
+                    return period.IsBefore(DateTime.Today);
+                })
+                .ToArray();
+            
+            // check if it has active reservations
+            if (activeReservations.Length > 0)
+            {
+                //stop deletion
+                MessageBox.Show(
+                 ($"Mušterija sa podacima\n" +
+                  $"{customer.FullName}\n" +
+                  $"Ima aktivne rezervacije i neće biti obrisana"),
+                 "Upozorenje",
+                 MessageBoxButtons.OK,
+                 MessageBoxIcon.Warning);
+                return null;
+            }
+            else if (inActiveReservations.Length > 0)
+            {
+                // delete inactive reservations
+                foreach (ReservationModel reservation in inActiveReservations)
+                {
+                    RentACarLibrary.GlobalConfig.ReservationModelConection
+                        .Delete(reservation.ID);
+                }
+            }
+
+            // delete
+            return DataConnection.Delete(customer.ID);
         }
     }
 }

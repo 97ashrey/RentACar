@@ -9,6 +9,7 @@ using UI.Events.Messages;
 using RentACarLibrary.Models;
 using RentACarLibrary.DataAccess;
 using UI.Helpers;
+using System.Windows.Forms;
 
 namespace UI.Presenters.Data
 {
@@ -49,6 +50,56 @@ namespace UI.Presenters.Data
             };
 
             view.CreateColumns(columnsInfo);
+        }
+
+        protected override CarModel DeleteRecord(int index)
+        {
+            // get the car in question
+            CarModel car = dataSource[index] as CarModel;
+
+            ReservationModel[] reservations = RentACarLibrary.GlobalConfig.ReservationModelConection
+                .Filter(model => model.CarID == car.ID);
+
+            ReservationModel[] activeReservations = reservations
+                .Where(model => {
+                    TimePeriod period = new TimePeriod(model.From, model.To);
+                    return period.HasInside(DateTime.Today) || period.IsAfter(DateTime.Today);
+                })
+                .ToArray();
+
+            ReservationModel[] inActiveReservations = reservations
+                .Where(model => {
+                    TimePeriod period = new TimePeriod(model.From, model.To);
+                    return period.IsBefore(DateTime.Today);
+                })
+                .ToArray();
+
+            // check if it has active reservations
+            if (activeReservations.Length > 0)
+            {
+                //stop deletion
+                MessageBox.Show(
+                 ($"Automobil sa podacima\n" +
+                  $"{car.CarName}\n" +
+                  $"Ima aktivne rezervacije i neće biti obrisan"),
+                 "Upozorenje",
+                 MessageBoxButtons.OK,
+                 MessageBoxIcon.Warning);
+                return null;
+            }
+            else if(inActiveReservations.Length > 0)
+            {
+                // delete inactive reservations
+                foreach(ReservationModel reservation in inActiveReservations)
+                {
+                    RentACarLibrary.GlobalConfig.ReservationModelConection
+                        .Delete(reservation.ID);
+                }
+            }
+
+            // delete
+            car = DataConnection.Delete(car.ID);
+            return car;
         }
     }
 }

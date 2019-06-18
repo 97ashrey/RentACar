@@ -37,6 +37,16 @@ namespace UI.Presenters.Data
             {
                 case CrudOperationMessage.CrudResult.Success:
                     view.CarInfo = "";
+                    AlertMessage successMesage = new AlertMessage(
+                        AlertMessage.MessageType.Success,
+                        "Uspešno ste ukinuli rezervaciju!");
+                    view.ShowAlertMessage(successMesage);
+                    break;
+                case CrudOperationMessage.CrudResult.Error:
+                    AlertMessage errorMesage = new AlertMessage(
+                        AlertMessage.MessageType.Error,
+                        "Neuspešno ukidanje rezervacije!");
+                    view.ShowAlertMessage(errorMesage);
                     break;
                 default:
                     break;
