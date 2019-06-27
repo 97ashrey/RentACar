@@ -54,6 +54,7 @@
     <Compile Include="Events\Messages\AlertMessage.cs" />
     <Compile Include="Events\Messages\ReservationMessages\CarSelectedMessage.cs" />
     <Compile Include="Events\Messages\ReservationMessages\CarsFoundMessage.cs" />
+    <Compile Include="Events\Messages\ResetViewMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\AddRecordMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\CrudOperationMessage.cs" />
     <Compile Include="Events\Messages\TableMessages\DeleteSelectedRecordsMessage.cs" />

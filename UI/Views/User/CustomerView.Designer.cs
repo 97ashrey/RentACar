@@ -80,7 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 518);
             this.Name = "CustomerView";
-            this.Text = "CustomerView";
+            this.Text = "Rent a car - Kupac";
             this.panelSide.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

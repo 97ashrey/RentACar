@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarLibrary.Extensions
+namespace UI.Events.Messages
 {
-    class StringExtensions
+    public class ResetViewMessage : IApplicationEvent
     {
     }
 }

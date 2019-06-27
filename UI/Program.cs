@@ -33,7 +33,6 @@ namespace UI
 
             //Application.Run(CreateAdminView());
             //Application.Run(CreateCustomerView());
-            //Application.Run(new UI.Views.TestForm());
         }
 
         private static void StartApplication()

@@ -205,7 +205,8 @@ namespace UI.Presenters.Data
                     new TimePeriod(DateTime.Today, DateTime.MaxValue)
                 };
             }
-            else { 
+            else
+            { 
                 TimePeriod range = new TimePeriod(DateTime.Today, DateTime.MaxValue);
                 freePeriods = TimePeriod.GetFreePeriods(range, offerPeriods);
             }
@@ -258,8 +259,18 @@ namespace UI.Presenters.Data
 
         private void FindUpdateLimits()
         {
+            /*
+             *  Algorithm needs to find how much given period can expand or shrink depending on other periods.
+             *  First it checks how much it can expand by checking other offer periods.
+             *  Then it checks how much it can shrink by checking reservations for that offer.
+             *  Then it creates left and right range as available update values.
+             */
             TimePeriod offerPeriod = new TimePeriod(selectedOffer.Record.From, selectedOffer.Record.To);
 
+
+            /*
+             * If the selected offer is in the past, there is no point in updating it.
+             */ 
             if (offerPeriod.IsBefore(DateTime.Today))
             {
                 leftRange = null;
@@ -275,13 +286,19 @@ namespace UI.Presenters.Data
                 .OrderBy(period => period.Start)
                 .ToArray();
 
-            // find range limits
+            // find offers for the selected offer's car
             TimePeriod[] offerPeriods = RentACarLibrary.GlobalConfig.OfferModelConection
                       .Filter(model => model.CarID == selectedOffer.Record.CarID)
                       .Select(model => new TimePeriod(model.From, model.To))
                       .OrderBy(period => period.Start)
                       .ToArray();
 
+            /*
+             *  The minimum value that the left outer limit can take is the present day.
+             *  There is no point in expanding the time period so it starts in the past.
+             *  And if the period already starts in the past, we won't be able to expand or shrink
+             *  it on the left side.
+             */
             // Find outer limits
             DateTime leftOuterLimit = (offerPeriod.Start < DateTime.Today) ? offerPeriod.Start : DateTime.Today;
             DateTime rightOuterLimit = DateTime.MaxValue;
@@ -293,6 +310,7 @@ namespace UI.Presenters.Data
                     // offer before
                     try
                     {
+                        // ignore offers that are in the past
                         if (!offerPeriods[i - 1].IsBefore(DateTime.Today))
                         {
                             leftOuterLimit = offerPeriods[i - 1].End.AddDays(1);
@@ -317,19 +335,25 @@ namespace UI.Presenters.Data
             // asumption that offer has no active reservations
             DateTime leftInnerLimit = rightOuterLimit;
             DateTime rightInnerLimit = leftOuterLimit;
+            
             // then check against that asumption
             if (reservationPeriods.Length > 0)
             {
-                TimePeriod first = reservationPeriods.First();
-                TimePeriod last = reservationPeriods.Last();
-                leftInnerLimit = first.Start < DateTime.Today ? offerPeriod.Start : first.Start;
-                rightInnerLimit = last.End;
-                if (offerPeriod.StartsInside(first))
+                TimePeriod firstReservation = reservationPeriods.First();
+                TimePeriod lastReservation = reservationPeriods.Last();
+                // Again checks if the start should not change at all because it is already in the past.
+                leftInnerLimit = firstReservation.Start < DateTime.Today ? offerPeriod.Start : firstReservation.Start;
+                rightInnerLimit = lastReservation.End;
+
+                // Here we check for reservations that may contain more than one offer
+                if (offerPeriod.StartsInside(firstReservation))
                 {
+                    // First reservation began in an offer before the selected offer
                     leftInnerLimit = offerPeriod.Start;
                 }
-                if (offerPeriod.EndsInside(last))
+                if (offerPeriod.EndsInside(lastReservation))
                 {
+                    // Last reservation ends in an offer after the selected offer
                     rightInnerLimit = offerPeriod.End;
                 }
             }
@@ -416,6 +440,10 @@ namespace UI.Presenters.Data
             {
                 valid = false;
             }
+            if(view.From.Date > view.To.Date)
+            {
+                valid = false;
+            }
             return valid;
         }
         
@@ -447,7 +475,6 @@ namespace UI.Presenters.Data
         private void SaveTriggerHandler(object sender, EventArgs e)
         {
             // Create a new Offer object and send it to be created
-            // TODO Date Validations for saving
             bool priceValid = ValidatePriceField();
             bool carValid = ValidateCarField();
             if (!priceValid || !carValid)

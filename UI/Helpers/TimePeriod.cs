@@ -221,22 +221,29 @@ namespace UI.Helpers
 
         public static TimePeriod[] GetFreePeriods(TimePeriod range, TimePeriod[] reservedPeriods)
         {
+            /*
+             *  Algorithm goes trough ordered collection of time periods.
+             *  First it creates an asummed time period that starts at the beging of the given range.
+             *  For each time period in collection it checks if asummed period interescts with it.
+             *  If it does asummed period is moved to the day after the period in question
+             *  Otherwise it calculates number of days between asummed period and the period,
+             *  creates a new period with apropriate values and adds it to the list of free periods.
+             */
             List<TimePeriod> output = new List<TimePeriod>();
-            // subtract one day from range start to count that day while searching
             reservedPeriods = reservedPeriods.Where(
                     period => range.IntersectsWith(period)
                     )
                 .OrderBy(period => period.Start).ToArray();
 
+            // assumed period
             TimePeriod newPeriod = new TimePeriod(range.Start, range.Start);
             foreach (TimePeriod period in reservedPeriods)
             {
-                TimePeriod.TimePeriodRelation relation = period.GetRelation(newPeriod);
+                //TimePeriodRelation relation = period.GetRelation(newPeriod);
                 if (!period.IntersectsWith(newPeriod))
                 {
                     // calc the free period
                     int dayDiff = (int)(period.Start - newPeriod.End).TotalDays;
-                    //dayDiff += dayDiff == 1 ? 0:1; 
                     TimePeriod freePeriod = new TimePeriod(period.Start.AddDays(-dayDiff), period.Start.AddDays(-1));
                     output.Add(freePeriod);
                 }
@@ -244,9 +251,14 @@ namespace UI.Helpers
                 // move the period to the end of current reserved period
                 newPeriod.Start = newPeriod.End = period.End.AddDays(1);
             }
+            
+            //  Check to see if the last free period should end when the given range ends.
+            
             // get the last period
             TimePeriod last = reservedPeriods.Last();
-            // check if range period is not enclosing end touching last reserved period
+            
+            // If the last reserved period ends when the give range ends,
+            // then we don't add the last free period
             if (!range.IsEnclosingEndTouching(last))
             {
                 // add the last free period

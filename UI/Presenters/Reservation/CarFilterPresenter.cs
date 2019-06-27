@@ -30,7 +30,10 @@ namespace UI.Presenters.Reservation
             view.BrandPickedTriggered += BrandPickedHandler;
             view.FindCarsTriggered += FindCarsHandler;
             view.FilterResetTriggered += FilterResetHandler;
+            eventAggregator.Subscribe<ResetViewMessage>(ResetViewHandler);
         }
+
+ 
 
         private List<string> AddDefaultChoice(List<string> list)
         {
@@ -203,7 +206,12 @@ namespace UI.Presenters.Reservation
         private void FilterResetHandler(object sender, EventArgs e)
         {
             view.ClearAllControls();
-            //FindCars();
+        }
+
+        private void ResetViewHandler(ResetViewMessage message)
+        {
+            view.ClearAllControls();
+            FindCars();
         }
 
     }

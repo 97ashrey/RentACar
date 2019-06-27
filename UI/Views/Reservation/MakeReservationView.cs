@@ -17,11 +17,15 @@ namespace UI.Views.Reservation
         private Control carSelectView;
         private Control createReservationView;
 
+        public event EventHandler LoadedTrigger;
+
         public object Presenter { private get; set; }
 
         protected MakeReservationView()
         {
             InitializeComponent();
+
+            Load += LoadHandler;
         }
 
         public MakeReservationView(
@@ -44,6 +48,20 @@ namespace UI.Views.Reservation
         public void ShowAlertMessage(AlertMessage alertMessage)
         {
             ucAlert.Display(alertMessage);
+        }
+
+        private void LoadHandler(object sender, EventArgs e)
+        {
+            LoadedTrigger?.Invoke(this, e);
+            ParentChanged += ReloadHandler;
+        }
+
+        private void ReloadHandler(object sender, EventArgs e)
+        {
+            if (Parent != null)
+            {
+                LoadedTrigger?.Invoke(this, e);
+            }
         }
     }
 }

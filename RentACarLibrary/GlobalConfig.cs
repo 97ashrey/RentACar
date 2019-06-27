@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using RentACarLibrary.DataAccess.FileConnection;
 using RentACarLibrary.DataAccess;
 using RentACarLibrary.Models;
@@ -6,8 +7,7 @@ namespace RentACarLibrary
 {
     public static class GlobalConfig
     {
-        public const string RootDirectory = @"C:\Rent a car";
-
+        public const string RootDirectory = @"D:\Projects\c#\Rent_a_car\Rent a car";
         public static string GetDataDirectory()
         {
             return $"{RootDirectory}\\data";
@@ -53,10 +53,25 @@ namespace RentACarLibrary
             if (!Directory.Exists(RootDirectory))
             {
                 Directory.CreateDirectory(RootDirectory);
+            }
+            if (!Directory.Exists(GetDataDirectory()))
+            {
                 Directory.CreateDirectory(GetDataDirectory());
+            }
+            if (!Directory.Exists(GetUsersDirectory()))
+            {
                 Directory.CreateDirectory(GetUsersDirectory());
+            }
+            if (!Directory.Exists(GetCarsDirectory()))
+            {
                 Directory.CreateDirectory(GetCarsDirectory());
+            }
+            if (!Directory.Exists(GetReservationsDirectory()))
+            {
                 Directory.CreateDirectory(GetReservationsDirectory());
+            }
+            if (!Directory.Exists(GetOffersDirectory()))
+            {
                 Directory.CreateDirectory(GetOffersDirectory());
             }
         }

@@ -97,6 +97,15 @@ namespace UI.Presenters.Data
                 }
             }
 
+            // delete all offers for the selected car
+            OfferModel[] offers = RentACarLibrary.GlobalConfig.OfferModelConection
+                .Filter(model => model.CarID == car.ID);
+
+            foreach(OfferModel offer in offers)
+            {
+                RentACarLibrary.GlobalConfig.OfferModelConection.Delete(offer.ID);
+            }
+
             // delete
             car = DataConnection.Delete(car.ID);
             return car;

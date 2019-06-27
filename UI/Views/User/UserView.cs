@@ -29,8 +29,9 @@ namespace UI.Views.User
         private void UserView_Load(object sender, EventArgs e)
         {
             string username = RentACarLibrary.SessionData.CurrentUser != null ?
-                                RentACarLibrary.SessionData.CurrentUser.Username : "ashrey97";
-            lblUsername.Text =  username;
+                                RentACarLibrary.SessionData.CurrentUser.Username : "admin";
+            lblUsername.Text = username;
+
         }
     }
 }

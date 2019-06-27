@@ -24,6 +24,12 @@ namespace UI.Presenters.Reservation
         private void SubscribeToEvents()
         {
             eventAggregator.Subscribe<AlertMessage>(AlertMessageHandler);
+            view.LoadedTrigger += View_LoadedTrigger;
+        }
+
+        private void View_LoadedTrigger(object sender, EventArgs e)
+        {
+            eventAggregator.Publish(new ResetViewMessage());
         }
 
         private void AlertMessageHandler(AlertMessage message)

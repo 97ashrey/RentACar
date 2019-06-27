@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using UI.Events.Messages;
 
 namespace UI.Views.Login
@@ -88,6 +89,12 @@ namespace UI.Views.Login
                 }
             }
 
+            if(usernameControl.InputText.IndexOf(" ") != -1 || usernameControl.InputText.IndexOf(";") != -1)
+            {
+                errorProvider.SetError(usernameControl.TextBox, "Greska ne moze ; ili ' '");
+                valid = false;
+            }
+
             // check UMCN for correct length
             if (umcnControl.TextBox.Text.Length < Constants.UMCN_MAX_LENGTH)
             {
@@ -99,7 +106,15 @@ namespace UI.Views.Login
             if (phoneControl.TextBox.Text.Length < Constants.PHONE_NUMBER_MAX_LENGTH)
             {
                 // TODO display error message
-                errorProvider.SetError(phoneControl.TextBox, Messages.ErrorInvalidPhoneNumberFormat());
+                errorProvider.SetError(phoneControl.TextBox, Messages.ErrorInvalidPhoneNumberLength());
+                valid = false;
+            }
+
+            // check PhoneNumber for correct format
+            Regex phoneRegex = new Regex(@"06[0-6]\d{7}");
+            if (!phoneRegex.IsMatch(phoneControl.InputText.Trim()))
+            {
+                errorProvider.SetError(phoneControl.TextBox, Messages.ERROR_WRONG_PHONE_FORMAT);
                 valid = false;
             }
 

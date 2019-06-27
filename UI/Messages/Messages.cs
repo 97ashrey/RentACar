@@ -36,10 +36,12 @@ namespace UI
             return $"JMBG sadrži {Constants.UMCN_MAX_LENGTH} cifara!";
         }
 
-        public static string ErrorInvalidPhoneNumberFormat()
+        public static string ErrorInvalidPhoneNumberLength()
         {
             return $"Telefonski broj sadrži {Constants.PHONE_NUMBER_MAX_LENGTH} cifara!";
         }
+
+        public static string ERROR_WRONG_PHONE_FORMAT { get; } = "Broj telefona je u pogrešnom formatu!";
 
         public static string ERROR_DATE_IN_FUTURE { get; } = "Izabrali ste datum u buducnosti!";
 

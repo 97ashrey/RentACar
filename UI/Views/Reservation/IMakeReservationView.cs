@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI.Views.Reservation
 {
-    public interface IMakeReservationView: IPresenter, IAlert
+    public interface IMakeReservationView: IPresenter, IAlert, ILoad
     {
     }
 }

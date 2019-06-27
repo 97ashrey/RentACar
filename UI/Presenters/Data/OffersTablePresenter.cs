@@ -75,6 +75,7 @@ namespace UI.Presenters.Data
             OfferModel offer = wrappedOffer.Offer;
             TimePeriod offerPeriod = new TimePeriod(offer.From, offer.To);
 
+            // find reservations for this period
             ReservationModel[] reservations = RentACarLibrary.GlobalConfig.ReservationModelConection
                 .Filter(model => 
                     {
@@ -97,7 +98,6 @@ namespace UI.Presenters.Data
             }
             else
             {
-                // TODO delete all the reservations for this offer
                 foreach(ReservationModel reservation in reservations)
                 {
                     RentACarLibrary.GlobalConfig.ReservationModelConection

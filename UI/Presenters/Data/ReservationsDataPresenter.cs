@@ -209,6 +209,7 @@ namespace UI.Presenters.Data
 
         private void FindFreePeriods(int carId)
         {
+            // find available offers for the specified car
             offers = RentACarLibrary.GlobalConfig.OfferModelConection
                         .Filter(model => {
                             TimePeriod period = new TimePeriod(model.From, model.To);
@@ -223,12 +224,14 @@ namespace UI.Presenters.Data
                 return;
             }
 
+            // find car reservations
             TimePeriod[] reservationPeriods = RentACarLibrary.GlobalConfig.ReservationModelConection
                 .Filter(model => model.CarID == carId)
                 .Select(model => new TimePeriod(model.From, model.To))
                 .OrderBy(period => period.Start)
                 .ToArray();
 
+            // Find free periods
             TimePeriod firstOffer = new TimePeriod(offers.First().From, offers.First().To);
             TimePeriod lastOffer = new TimePeriod(offers.Last().From, offers.Last().To);
 
@@ -295,8 +298,6 @@ namespace UI.Presenters.Data
                         continue;
                     }
 
-                    //int days = printPeriod.GetDaySpan() + 1;
-                    //double price = days * offer.PricePerDay;
                     string from = printPeriod.Start.ToShortDateString();
                     string to = printPeriod.End == DateTime.MaxValue.Date ? "daljnjeg" : printPeriod.End.ToShortDateString();
                     string toPrint = $"Od {from} do {to} - cena po danu {offer.PricePerDay}";
@@ -332,6 +333,7 @@ namespace UI.Presenters.Data
                 view.Price = 0;
                 return;
             }
+
             TimePeriod pickedPeriod = new TimePeriod(view.From, view.To);
             double price = 0;
             foreach(OfferModel offer in offers)
@@ -350,6 +352,12 @@ namespace UI.Presenters.Data
 
         private void FindUpdateLimits()
         {
+            /*
+             * Algorithm checks how much a time period can expand or shrink
+             * depending on other reservations or other offers because the selected reservation
+             * could not be sorounded by other reservations on any of its sides and
+             * we can update a reservation so it becomes a part of more than one offer.
+             */ 
             ReservationModel reservation = selectedReservation.Record;
             TimePeriod reservationPeriod = new TimePeriod(reservation.From, reservation.To);
 
@@ -358,7 +366,9 @@ namespace UI.Presenters.Data
                     TimePeriod period = new TimePeriod(model.From, model.To);
                     return model.CarID == reservation.CarID &&
                            (period.HasInside(DateTime.Today) || period.IsAfter(DateTime.Today));
-                });
+                })
+                .OrderBy(model => model.From)
+                .ToArray();
 
             TimePeriod[] offerPeriods = offers
                 .Select(model => new TimePeriod(model.From, model.To))
@@ -375,7 +385,12 @@ namespace UI.Presenters.Data
 
             outerRange = new TimePeriod(reservationPeriod.Start, reservationPeriod.End);
             
-            // check reservations for outer range
+            // First check reservations for outer range
+            /*
+             * By setting the inital outer range to be equal to the selected reservation period
+             * We are setting a guard against the possibility that the selected resevation
+             * is either the first or the last in the collection of all reservations for the specified car.
+             */ 
             for (int i = 0; i < reservationPeriods.Length; i++)
             {
                 TimePeriod period = reservationPeriods[i];
@@ -387,6 +402,8 @@ namespace UI.Presenters.Data
                     }
                     catch (IndexOutOfRangeException)
                     {
+                        // This happends if the selected resevation is first in the collection
+                        // Start of outer range doesn't change from the first asumption
                     }
                     try
                     {
@@ -394,10 +411,17 @@ namespace UI.Presenters.Data
                     }
                     catch (IndexOutOfRangeException)
                     {
+                        // This happends if the selected resevation is last in the collection
+                        // End of outer range doesn't change from the first asumption
                     }
                     break;
                 }
             }
+
+            // Then check offers for the outer range
+            // Do to this check we must find the index of the offer in which interescts
+            // With the curently calculated outer range, and then check if outer range 
+            // can expand on any side or not.
 
             int offerIndex = 0;
             // find offerIndex
@@ -410,15 +434,10 @@ namespace UI.Presenters.Data
                 }
             }
 
-            // check other sources for the left outer range
-            //if (outerRange.HasInside(DateTime.Today))
-            //{
-            //    outerRange.Start = DateTime.Today;
-            //}
             // check offers for the left outer range 
-            if (outerRange.Start == reservationPeriod.Start)
+            if(reservationPeriods.First().IsExactMatch(reservationPeriod))
             {
-                // find left range limit
+                // find left range limit (going backwards with offers)
                 for (int i = offerIndex; i > -1; i--)
                 {
                     int dayDiff = (int)(outerRange.Start - offerPeriods[i].End).TotalDays;
@@ -429,9 +448,9 @@ namespace UI.Presenters.Data
                 }
             }
 
-            // find the right outer range
             if (reservationPeriods.Last().IsExactMatch(reservationPeriod))
             {
+                // find the right outer range (going forward with offers)
                 for (int i = offerIndex; i < offerPeriods.Length; i++)
                 {
                     int dayDiff = (int)(offerPeriods[i].Start - outerRange.End).TotalDays;
@@ -469,6 +488,10 @@ namespace UI.Presenters.Data
                 view.AllInputsEnabled = true;
             }
 
+            /*
+             * If the period has the present day inside it, it means that the reservations has started already
+             * and we can't change the car or the user for that reservation.
+             */
             if (reservationPeriod.HasInside(DateTime.Today))
             {
                 view.CarSelectorEnabled = false;
@@ -523,6 +546,9 @@ namespace UI.Presenters.Data
             }
             catch (Exception ex)
             {
+                // view.From > view.To
+                // OR
+                // freePeriods == null
                 if(ex is ArgumentException || ex is NullReferenceException)
                 {
                     valid = false;
@@ -542,6 +568,9 @@ namespace UI.Presenters.Data
             }
             catch (Exception ex)
             {
+                // view.From > view.To
+                // OR
+                // outerRange == null
                 if (ex is ArgumentException || ex is NullReferenceException)
                 {
                     valid = false;
@@ -595,6 +624,7 @@ namespace UI.Presenters.Data
                     new AlertMessage(AlertMessage.MessageType.Error, "Nema tog slobodnog termina"));
                 return;
             }
+
 
             // Create a new Reservation object and send it to be created
             ReservationModel Reservation = new ReservationModel();

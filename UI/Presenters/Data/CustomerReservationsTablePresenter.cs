@@ -28,7 +28,14 @@ namespace UI.Presenters.Data
 
         protected override void LoadData()
         {
+
             UserModel currentUser = RentACarLibrary.SessionData.CurrentUser;
+            
+            // testing part
+            currentUser = currentUser == null ? RentACarLibrary.GlobalConfig.UserModelConnection
+                .GetByUsername("korisnik") : currentUser;
+            RentACarLibrary.SessionData.LogUserIn(currentUser);
+
             ReservationModel[] reservations = DataConnection.Filter(model => model.UserID == currentUser.ID);
             List<ReservationModelWrapper> wrappedResevations = new List<ReservationModelWrapper>();
             foreach(ReservationModel model in reservations)

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.UserControls;
@@ -146,7 +147,15 @@ namespace UI.Views.Data
             if (phoneControl.InputText.Length < Constants.PHONE_NUMBER_MAX_LENGTH)
             {
                 // TODO display error message
-                errorProvider.SetError(phoneControl.TextBox, Messages.ErrorInvalidPhoneNumberFormat());
+                errorProvider.SetError(phoneControl.TextBox, Messages.ErrorInvalidPhoneNumberLength());
+                valid = false;
+            }
+
+            // check PhoneNumber for correct format
+            Regex phoneRegex = new Regex(@"06[0-6]\d{7}");
+            if (!phoneRegex.IsMatch(phoneControl.InputText.Trim()))
+            {
+                errorProvider.SetError(phoneControl.TextBox, Messages.ERROR_WRONG_PHONE_FORMAT);
                 valid = false;
             }
 

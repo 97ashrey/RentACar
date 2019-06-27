@@ -79,7 +79,6 @@ namespace UI.Views.Data
         public bool AllInputsEnabled
         {
             get => carControl.Enabled && 
-                   lblCarInfo.Enabled &&
                    lbFreePeriods.Enabled &&
                    dateFromControl.Enabled &&
                    dateToControl.Enabled &&
@@ -89,7 +88,6 @@ namespace UI.Views.Data
                 //tlpCar.Enabled = value;
                 //tlpForm.Enabled = value;
                 carControl.Enabled = value;
-                lblCarInfo.Enabled = value;
                 lbFreePeriods.Enabled = value;
                 dateFromControl.Enabled = value;
                 dateToControl.Enabled = value;

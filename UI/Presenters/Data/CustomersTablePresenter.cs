@@ -54,6 +54,7 @@ namespace UI.Presenters.Data
             TableColumnInfo[] columnsInfo = new TableColumnInfo[]
            {
                 new TableColumnInfo("ID","ID"),
+                new TableColumnInfo("Korisničko ime","Username"),
                 new TableColumnInfo("Ime","FirstName"),
                 new TableColumnInfo("Prezime","LastName"),
                 new TableColumnInfo("Datum rodjenja", "DateOfBirth"),

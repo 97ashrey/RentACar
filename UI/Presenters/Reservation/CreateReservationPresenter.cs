@@ -36,6 +36,14 @@ namespace UI.Presenters.Reservation
             view.CreateReservationTriggered += CreateReservationHandler;
             view.DatePickedTriggered += DatePickedHandler;
             eventAggregator.Subscribe<CarSelectedMessage>(CarSelectedHandler);
+            eventAggregator.Subscribe<ResetViewMessage>(ResetViewHandler);
+        }
+
+        private void ResetViewHandler(ResetViewMessage obj)
+        {
+            view.DateFrom = DateTime.Today;
+            view.DateTo = DateTime.Today;
+            view.Price = 0;
         }
 
         private void FindFreePeriods(int carId)

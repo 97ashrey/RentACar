@@ -62,18 +62,19 @@ namespace RentACarLibrary.DataAccess.FileConnection
 
         public T[] GetAll()
         {
+            List<T> models = new List<T>();
             string[] files = ModelConnectionHelpers.GetDirectoryFiles(dataDirectory);
             if (files == null)
             {
-                return null;
+                return models.ToArray();
             }
-            T[] models = new T[files.Length];
-            for (int i = 0; i < models.Length; i++)
+            
+            foreach(string file in files)
             {
-                models[i] = (T)FSConnection.Read(files[i]) ;
+                models.Add((T)FSConnection.Read(file));
             }
 
-            return models;
+            return models.ToArray();
         }
 
         public T Update(T data)
